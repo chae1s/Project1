@@ -1,0 +1,134 @@
+@charset "UTF-8";
+
+#trip_wrap {
+    position: relative;
+    width: 100%;
+    min-width: 1040px;
+}
+
+.header {
+	margin-bottom: 50px;
+	background-color: #fff;
+}
+
+.header .contents {
+	width: 1136px;
+	margin: 0 auto;
+}
+
+.header_content .contents {
+	display: flex;
+	justify-content: space-between;
+	padding: 13px 0 15px 0;
+	background-color: #fff;
+}
+
+.header_content .contents .logo {
+	width: 152px;
+	height: 70px;
+	display: flex;
+	align-items: flex-start;
+	flex-shrink: 0;
+}
+
+.header_content .contents .logo_text {
+	font-size: 16px;
+	font-weight: 400;
+	height: auto;
+	align-self: auto;
+	position: absolute;
+	text-align: center;
+	line-height: normal;
+	font-stretch: normal;
+	letter-spacing: 5.2px;
+}
+
+.header_content .contents .logo_text .logo_text_name {
+	font-size: 36px;
+	font-weight: 700;
+	color: #7286D3;
+	letter-spacing: 4.38px;
+}
+
+.header_content .contents .userInfo {
+	display: flex;
+	align-items: center;
+}
+
+.header_content .contents .userInfo a {
+	display: flex;
+	align-items: center;
+	position: relative;
+	line-height: 18px;
+	padding: 0 10px 0 24px;
+}
+
+.nav {
+	position: absolute;
+	left: 0;
+	width: 100%;
+	background-color: #fff;
+}
+
+.nav .contents {
+	position: relative;
+}
+
+.nav_menu {
+	display: inline-flex;
+	height: 56px;
+}
+
+.nav_menu a {
+	display: flex;
+	align-items: center;
+	position: relative;
+	line-height: 18px;
+	padding: 0 10px;
+	margin: 0 57px 0 0;
+}
+
+.nav_menu a:hover {
+	color: #7286D3;
+}
+
+.totalSearch {
+	display: inline-flex;
+	position: absolute;
+	align-items: flex-start;
+	flex-shrink: 0;
+	right: 0;
+	top: 7px;
+}
+
+.totalSearch label {
+	display: block;
+}
+
+.totalSearch label input {
+	width: 369px;
+	height: 38px;
+	font-size: 16px;
+	font-weight: 400;
+	border-radius: 10px;
+	border: 2px solid #80898F;
+	padding-left: 10px;
+}
+
+.totalSearch label input:focus {
+	border-color: #7286D3;
+}
+
+.totalSearch label button {
+	position: absolute;
+	top: 8.5px;
+	right: 12px;
+	width: 23px;
+	height: 23px;
+	background-color: transparent;
+}
+
+.totalSearch label button img {
+	width: 100%;
+	height: 100%;
+}

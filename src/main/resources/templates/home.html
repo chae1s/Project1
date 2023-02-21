@@ -1,10 +1,244 @@
 <!DOCTYPE html>
-<html>
-<head>
-<meta charset="UTF-8">
-<title>Insert title here</title>
-</head>
+<html xmlns:th="http://www.thymeleaf.org">
+	<head>
+		<meta charset="UTF-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1">
+		<title>Insert title here</title>
+		<link rel="stylesheet" th:href="@{/css/home.css}">
+		<th:block th:replace="fragments/config :: configFragment"></th:block>
+	</head>
 <body>
-	<h1>Home</h1>
+	<div>
+		<div id="trip_wrap">
+			<div class="frame">
+				<div th:replace="fragments/header :: menu"></div>
+				<div class="ad_slider">
+					<ul>
+						<li>
+							<a href = "#">
+								<img alt="" th:src="@{/images/ad/ad_1.png}">
+							</a>
+						</li>
+					</ul>
+				</div>
+				<section class="site_contents">
+					<div class="site_title">
+					 	<h3>인기 여행지</h3>
+					 	<a href="#">더보기</a>
+					</div>
+					<div class="site_list">
+						<div class="site" th:onclick="'location.href=\''+ @{/} + '\''">
+							<img class="site_img" th:src="@{/images/site/site_1.jpg}" />
+							<div class="site_text">
+								<div class="site_info">
+									<span class="info_location">서울</span>
+									<span class="info_category">식당</span>
+									<h3>아당당다르당당당</h3>
+									<h3 class="info_time">09:00 ~ 21:00</h3>
+								</div>
+								<div class="site_star">
+									<img th:src="@{/icons/star_outline.png}" />
+									<img th:src="@{/icons/star_outline.png}" />
+									<img th:src="@{/icons/star_outline.png}" />
+									<img th:src="@{/icons/star_outline.png}" />
+									<img th:src="@{/icons/star_outline.png}" />
+									<span class="frame-text092">(2,027)</span>
+								</div>
+								<div class="site_hashtag">
+									<span class="frame-text084">#맛집인정</span>
+									<span class="frame-text086">#맛집인정</span>
+									<span class="frame-text088">#맛집인정</span>
+									<span class="frame-text090">#맛집인정</span>
+								</div>
+							</div>
+						</div>
+						<div class="site" th:onclick="'location.href=\''+ @{/} + '\''">
+							<img class="site_img" th:src="@{/images/site/site_1.jpg}" />
+							<div class="site_text">
+								<div class="site_info">
+									<span class="info_location">서울</span>
+									<span class="info_category">식당</span>
+									<h3>아당당다르당당당</h3>
+									<h3 class="info_time">09:00 ~ 21:00</h3>
+								</div>
+								<div class="site_star">
+									<img th:src="@{/icons/star_outline.png}" />
+									<img th:src="@{/icons/star_outline.png}" />
+									<img th:src="@{/icons/star_outline.png}" />
+									<img th:src="@{/icons/star_outline.png}" />
+									<img th:src="@{/icons/star_outline.png}" />
+									<span class="frame-text092">(2,027)</span>
+								</div>
+								<div class="site_hashtag">
+									<span class="frame-text084">#맛집인정</span>
+									<span class="frame-text086">#맛집인정</span>
+									<span class="frame-text088">#맛집인정</span>
+									<span class="frame-text090">#맛집인정</span>
+								</div>
+							</div>
+						</div>
+						<div class="site" th:onclick="'location.href=\''+ @{/} + '\''">
+							<img class="site_img" th:src="@{/images/site/site_1.jpg}" />
+							<div class="site_text">
+								<div class="site_info">
+									<span class="info_location">서울</span>
+									<span class="info_category">식당</span>
+									<h3>아당당다르당당당</h3>
+									<h3 class="info_time">09:00 ~ 21:00</h3>
+								</div>
+								<div class="site_star">
+									<img th:src="@{/icons/star_outline.png}" />
+									<img th:src="@{/icons/star_outline.png}" />
+									<img th:src="@{/icons/star_outline.png}" />
+									<img th:src="@{/icons/star_outline.png}" />
+									<img th:src="@{/icons/star_outline.png}" />
+									<span class="frame-text092">(2,027)</span>
+								</div>
+								<div class="site_hashtag">
+									<span class="frame-text084">#맛집인정</span>
+									<span class="frame-text086">#맛집인정</span>
+									<span class="frame-text088">#맛집인정</span>
+									<span class="frame-text090">#맛집인정</span>
+								</div>
+							</div>
+						</div>
+						<div class="site" th:onclick="'location.href=\''+ @{/} + '\''">
+							<img class="site_img" th:src="@{/images/site/site_1.jpg}" />
+							<div class="site_text">
+								<div class="site_info">
+									<span class="info_location">서울</span>
+									<span class="info_category">식당</span>
+									<h3>아당당다르당당당</h3>
+									<h3 class="info_time">09:00 ~ 21:00</h3>
+								</div>
+								<div class="site_star">
+									<img th:src="@{/icons/star_outline.png}" />
+									<img th:src="@{/icons/star_outline.png}" />
+									<img th:src="@{/icons/star_outline.png}" />
+									<img th:src="@{/icons/star_outline.png}" />
+									<img th:src="@{/icons/star_outline.png}" />
+									<span class="frame-text092">(2,027)</span>
+								</div>
+								<div class="site_hashtag">
+									<span class="frame-text084">#맛집인정</span>
+									<span class="frame-text086">#맛집인정</span>
+									<span class="frame-text088">#맛집인정</span>
+									<span class="frame-text090">#맛집인정</span>
+								</div>
+							</div>
+						</div>
+					</div>
+				</section>
+				<section class="site_contents">
+					<div class="site_title">
+					 	<h3>새 여행지</h3>
+					 	<a href="#">더보기</a>
+					</div>
+					<div class="site_list">
+						<div class="site" th:onclick="'location.href=\''+ @{/} + '\''">
+							<img class="site_img" th:src="@{/images/site/site_1.jpg}" />
+							<div class="site_text">
+								<div class="site_info">
+									<span class="info_location">서울</span>
+									<span class="info_category">식당</span>
+									<h3>아당당다르당당당</h3>
+									<h3 class="info_time">09:00 ~ 21:00</h3>
+								</div>
+								<div class="site_star">
+									<img th:src="@{/icons/star_outline.png}" />
+									<img th:src="@{/icons/star_outline.png}" />
+									<img th:src="@{/icons/star_outline.png}" />
+									<img th:src="@{/icons/star_outline.png}" />
+									<img th:src="@{/icons/star_outline.png}" />
+									<span class="frame-text092">(2,027)</span>
+								</div>
+								<div class="site_hashtag">
+									<span class="frame-text084">#맛집인정</span>
+									<span class="frame-text086">#맛집인정</span>
+									<span class="frame-text088">#맛집인정</span>
+									<span class="frame-text090">#맛집인정</span>
+								</div>
+							</div>
+						</div>
+						<div class="site" th:onclick="'location.href=\''+ @{/} + '\''">
+							<img class="site_img" th:src="@{/images/site/site_1.jpg}" />
+							<div class="site_text">
+								<div class="site_info">
+									<span class="info_location">서울</span>
+									<span class="info_category">식당</span>
+									<h3>아당당다르당당당</h3>
+									<h3 class="info_time">09:00 ~ 21:00</h3>
+								</div>
+								<div class="site_star">
+									<img th:src="@{/icons/star_outline.png}" />
+									<img th:src="@{/icons/star_outline.png}" />
+									<img th:src="@{/icons/star_outline.png}" />
+									<img th:src="@{/icons/star_outline.png}" />
+									<img th:src="@{/icons/star_outline.png}" />
+									<span class="frame-text092">(2,027)</span>
+								</div>
+								<div class="site_hashtag">
+									<span class="frame-text084">#맛집인정</span>
+									<span class="frame-text086">#맛집인정</span>
+									<span class="frame-text088">#맛집인정</span>
+									<span class="frame-text090">#맛집인정</span>
+								</div>
+							</div>
+						</div>
+						<div class="site" th:onclick="'location.href=\''+ @{/} + '\''">
+							<img class="site_img" th:src="@{/images/site/site_1.jpg}" />
+							<div class="site_text">
+								<div class="site_info">
+									<span class="info_location">서울</span>
+									<span class="info_category">식당</span>
+									<h3>아당당다르당당당</h3>
+									<h3 class="info_time">09:00 ~ 21:00</h3>
+								</div>
+								<div class="site_star">
+									<img th:src="@{/icons/star_outline.png}" />
+									<img th:src="@{/icons/star_outline.png}" />
+									<img th:src="@{/icons/star_outline.png}" />
+									<img th:src="@{/icons/star_outline.png}" />
+									<img th:src="@{/icons/star_outline.png}" />
+									<span class="frame-text092">(2,027)</span>
+								</div>
+								<div class="site_hashtag">
+									<span class="frame-text084">#맛집인정</span>
+									<span class="frame-text086">#맛집인정</span>
+									<span class="frame-text088">#맛집인정</span>
+									<span class="frame-text090">#맛집인정</span>
+								</div>
+							</div>
+						</div>
+						<div class="site" th:onclick="'location.href=\''+ @{/} + '\''">
+							<img class="site_img" th:src="@{/images/site/site_1.jpg}" />
+							<div class="site_text">
+								<div class="site_info">
+									<span class="info_location">서울</span>
+									<span class="info_category">식당</span>
+									<h3>아당당다르당당당</h3>
+									<h3 class="info_time">09:00 ~ 21:00</h3>
+								</div>
+								<div class="site_star">
+									<img th:src="@{/icons/star_outline.png}" />
+									<img th:src="@{/icons/star_outline.png}" />
+									<img th:src="@{/icons/star_outline.png}" />
+									<img th:src="@{/icons/star_outline.png}" />
+									<img th:src="@{/icons/star_outline.png}" />
+									<span class="frame-text092">(2,027)</span>
+								</div>
+								<div class="site_hashtag">
+									<span class="frame-text084">#맛집인정</span>
+									<span class="frame-text086">#맛집인정</span>
+									<span class="frame-text088">#맛집인정</span>
+									<span class="frame-text090">#맛집인정</span>
+								</div>
+							</div>
+						</div>
+					</div>
+				</section>
+			</div>
+		</div>
+	</div>
 </body>
 </html>

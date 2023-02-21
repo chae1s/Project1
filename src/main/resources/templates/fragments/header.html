@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+
+<html xmlns:th="http://www.thymeleaf.org"
+	  xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+	<body>
+		<div class="header" th:fragment ="menu">
+			<div class="header_content">
+				<div class="contents">
+					<div class="logo">
+						<span class="logo_text">
+							<a href="#">
+								<span class="logo_text_name">ㅇㅎ<span>ㅇㄱ</span></span><br/>
+								<span>우리의 여행일기</span>
+							</a>
+						</span>
+					</div>
+					<div class="userInfo">
+						<a th:href="@{/users/login}" sec:authorize="isAnonymous()">
+							<span>로그인</span>
+						</a>					
+						<a th:href="@{/users/login}" sec:authorize="isAuthenticated()">
+							<span>로그아웃</span>
+						</a>					
+						<a th:href="@{/users/login}" sec:authorize="isAnonymous()">
+							<span>회원가입</span>
+						</a>				
+						<a th:href="@{/users/login}" sec:authorize="isAuthenticated()">
+							<span>내정보</span>
+						</a>	
+						<a th:href="@{/users/login}">
+							<span>고객센터</span>
+						</a>					
+					</div>
+				</div>
+		    </div>
+		    <div class="nav">
+			    <div class="contents">
+				    <div class="nav_menu">
+				        <a th:href="@{/users/login}">여행장소</a>
+				        <a th:href="@{/users/login}">여행일기</a>
+				        <a th:href="@{/users/login}">여행일정</a>
+				        <a th:href="@{/users/login}">예약하기</a>
+				        <a th:href="@{/users/login}">이벤트</a>
+				        <div class="totalSearch">
+					        <label for="totalSearch">
+					        	<input type="text" id="header_keyword">
+					        	<button>
+					        		<img alt="" th:src="@{/icons/search.png}">
+					        	</button>
+					        </label>
+				        </div>
+				    </div>
+		    	</div>
+		    </div>
+    	</div>
+	</body>
+</html>
