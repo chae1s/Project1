@@ -21,7 +21,9 @@ public class SecurityConfig {
 			.and()
 			.csrf().disable()
 			.authorizeHttpRequests()
-									.antMatchers("/").permitAll();
+									.antMatchers("/").permitAll()
+									
+		;
 		
 		return http.build();
 	}
