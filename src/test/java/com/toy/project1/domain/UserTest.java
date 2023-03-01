@@ -1,7 +1,5 @@
 package com.toy.project1.domain;
 
-import static org.junit.Assert.*;
-
 import java.util.List;
 
 import org.assertj.core.api.Assertions;
@@ -33,7 +31,7 @@ public class UserTest {
 				.name("관리자")
 				.nickname("관리자")
 				.enabled(true)
-				.role(Role.ADMIN)
+				.role(Role.ROLE_ADMIN)
 				.build();
 		//when
 		userRepository.save(user);
