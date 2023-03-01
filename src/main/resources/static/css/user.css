@@ -1,0 +1,239 @@
+@charset "UTF-8";
+
+.logo_contents .contents {
+	width: 1136px;
+	margin: 0 auto;
+}
+
+.logo_contents .contents {
+	padding: 40px 0 15px 0;
+	background-color: #fff;
+}
+
+.logo_contents .contents .logo {
+	width: 152px;
+	height: 76px;
+	margin: 0 auto;
+	cursor: pointer;
+}
+
+.logo_contents .contents .logo img {
+	width: 100%;
+	height: 100%;
+}
+
+.join_contents .contents{
+	width: 362px;
+	height: 100%;
+	margin: 50px auto;
+}
+
+.join_contents .join_text h2{
+	font-size: 20px;
+	font-weight: 500;
+}
+
+
+.join_contents .social_join {
+	margin-top: 50px;
+	border-bottom: 1px solid #D9D9D9;
+}
+
+.join_contents .social_join h3 {
+	font-size: 12px;
+	font-weight: 400;
+	color: #80898F;
+	text-align: center;
+}
+
+.join_contents .social_join .social_icons {
+	margin: 14px 0 30px 0;
+	display: flex;
+	justify-content: center;
+}
+
+.join_contents .social_join .social_icons a {
+	margin-right: 30px;
+}
+
+.join_contents .social_join .social_icons a:last-child {
+	margin-right: 0px;
+}
+
+.join_contents .social_join .social_icons a img {
+	width: 48px;
+	height: 48px;
+}
+
+.join_contents .email_join .join_input {
+	margin-top: 35px;
+}
+
+.join_contents .email_join .input_label {
+	font-size: 16px;
+	font-weight: 500;
+}
+
+.join_contents .email_join input {
+	width: 336px;
+	font-size: 14px;
+	border-radius: 4px;
+	border: 2px solid #D9D9D9;
+	padding: 10px 10px 8px;
+	margin: 12px 0 9px;
+}
+
+.join_contents .email_join input:focus {
+	border-color: #C4DFFF;
+}
+
+.join_contents .email_join .join_warn {
+	font-size: 14px;
+	font-weight: 400;
+	color: #D3728E;
+}
+
+.join_contents .clause {
+	margin-top: 35px;
+}
+
+.join_contents .clause .clause_name {
+	font-size: 16px;
+	font-weight: 500;
+}
+
+.join_contents .clause .checkbox_area {
+	margin-top: 12px;
+	border: 1px solid #D9D9D9;
+}
+
+.join_contents .clause .checkbox_area .join_agreeAll {
+	border-bottom: 1px solid #D9D9D9;
+	padding: 10px;
+}
+
+.join_contents .clause .checkbox_area .join_agreeAll label {
+	font-size: 14px;
+	font-weight: 500;
+}
+
+.join_contents .clause .checkbox_area .join_agree {
+	display: flex;
+	padding: 10px;
+	gap: 10px 0;
+	flex-direction: column;
+}
+
+.join_contents .clause .checkbox_area .join_agree .essential {
+	font-size: 12px;
+	color: #7286D3;
+}
+
+.join_contents .clause .checkbox_area .join_agree .choice {
+	font-size: 12px;
+	color: #80898F;
+}
+
+.join_contents .clause .checkbox_area .join_agree .clause_txt {
+	font-size: 14px;
+}
+
+.join_contents .clause .checkbox_area input[type="checkbox"] {
+	position: relative;
+	top: 1.5px;
+	accent-color: #7286D3;
+	width: 14px;
+	height: 14px;
+}
+
+.join_contents .contents .join_btn {
+	width: 362px;
+	height: 40px;
+	margin: 35px 0;
+	font-size: 17px;
+	font-weight: 600;
+	color: #fff;
+	background-color: #7286D3;
+}
+
+.join_contents .contents .join_btn:disabled {
+	background-color: #D9D9D9;
+}
+
+.login_contents .contents{
+	width: 362px;
+	height: 100%;
+	margin: 50px auto;
+}
+
+.login_contents .login_text h2{
+	font-size: 20px;
+	font-weight: 500;
+}
+
+.login_contents .email_login {
+	margin-top: 35px;
+}
+
+.login_contents .email_login input {
+	width: 336px;
+	font-size: 14px;
+	border-radius: 4px;
+	border: 2px solid #D9D9D9;
+	padding: 10px 10px 8px;
+	margin: 12px 0 9px;
+}
+
+.login_contents .email_login input:focus {
+	border-color: #7286D3;
+}
+
+.login_contents .email_login input:focus {
+	border-color: #7286D3;
+}
+
+.login_contents .login_error {
+	font-size: 14px;
+	font-weight: 400;
+	color: #D3728E;
+	height: 14px;
+}
+
+.login_contents .login_btn {
+	width: 362px;
+	height: 40px;
+	margin: 25px 0 35px 0;
+	font-size: 17px;
+	font-weight: 600;
+	color: #fff;
+	background-color: #7286D3;
+}
+
+.login_contents .login_link {
+	display: flex;
+	justify-content: center;
+	gap: 35px;
+}
+
+.login_contents .login_link a {
+	color: #80898F;
+}
+
+.login_contents .social_login .social_icons {
+	margin: 49px 0 30px 0;
+	display: flex;
+	justify-content: center;
+}
+
+.login_contents .social_login .social_icons a {
+	margin-right: 30px;
+}
+
+.login_contents .social_login .social_icons a:last-child {
+	margin-right: 0px;
+}
+
+.login_contents .social_login .social_icons a img {
+	width: 48px;
+	height: 48px;
+}

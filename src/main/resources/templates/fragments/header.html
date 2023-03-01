@@ -6,13 +6,8 @@
 		<div class="header" th:fragment ="menu">
 			<div class="header_content">
 				<div class="contents">
-					<div class="logo">
-						<span class="logo_text">
-							<a href="#">
-								<span class="logo_text_name">ㅇㅎ<span>ㅇㄱ</span></span><br/>
-								<span>우리의 여행일기</span>
-							</a>
-						</span>
+					<div class="logo" th:onclick="'location.href=\''+ @{/} + '\''">
+						<img alt="" th:src="@{/icons/logo_icon.png}" />
 					</div>
 					<div class="userInfo">
 						<a th:href="@{/users/login}" sec:authorize="isAnonymous()">
@@ -21,7 +16,7 @@
 						<a th:href="@{/users/login}" sec:authorize="isAuthenticated()">
 							<span>로그아웃</span>
 						</a>					
-						<a th:href="@{/users/login}" sec:authorize="isAnonymous()">
+						<a th:href="@{/users/join}" sec:authorize="isAnonymous()">
 							<span>회원가입</span>
 						</a>				
 						<a th:href="@{/users/login}" sec:authorize="isAuthenticated()">

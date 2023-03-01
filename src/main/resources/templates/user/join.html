@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+	<head>
+		<meta charset="UTF-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1">
+		<title>Insert title here</title>
+		<link rel="stylesheet" th:href="@{/css/user.css}">
+		<th:block th:replace="fragments/config :: configFragment"></th:block>
+	</head>
+	<body>
+		<div>
+			<div id="trip_wrap">
+				<div class="frame">
+					<div class="logo_contents">
+						<div class="contents">
+							<div class="logo" th:onclick="'location.href=\''+ @{/} + '\''">
+								<img alt="" th:src="@{/icons/logo_icon.png}" />
+							</div>
+						</div>
+					</div>
+					<div class="join_contents">
+						<div class="contents">
+							<div class="join_text">
+								<h2>회원가입</h2>
+							</div>
+							<div class="social_join">
+								<h3>SNS 계정으로 간편하게 회원가입</h3>
+								<div class="social_icons">
+									<a href="#">
+										<img th:src="@{/icons/naver_login.png}" />
+									</a>
+									<a href="#">
+										<img th:src="@{/icons/kakao_login.png}" />
+									</a>
+									<a href="#">
+										<img th:src="@{/icons/google_login.png}" />
+									</a>
+									<a href="#">
+										<img th:src="@{/icons/twitter_login.png}" />
+									</a>
+								</div>
+							</div>
+							<form th:action="@{/users/join}" method="post">
+								<div class="email_join">
+									<div class="join_input">
+										<div class="input_label">이메일</div>
+										<label for="email">
+											<input type="text" name="email" id="email">
+										</label>
+										<div class="join_warn email_warn">이미 가입되어 있는 이메일입니다.</div>
+									</div>
+									<div class="join_input">
+										<div class="input_label">비밀번호</div>
+										<label for="password">
+											<input type="password" name="password" id="password">
+										</label>
+										<div class="join_warn pw_warn">이미 가입되어 있는 이메일입니다.</div>
+									</div>
+									<div class="join_input">
+										<div class="input_label">비밀번호 확인</div>
+										<label for="passwordCheck">
+											<input type="password" name="passwordCheck" id="passwordCheck">
+										</label>
+										<div class="join_warn pwCheck_warn">이미 가입되어 있는 이메일입니다.</div>
+									</div>
+									<div class="join_input">
+										<div class="input_label">이름</div>
+										<label for="name">
+											<input type="text" name="name" id="name">
+										</label>
+										<div class="join_warn name_warn">이미 가입되어 있는 이메일입니다.</div>
+									</div>
+									<div class="join_input">
+										<div class="input_label">닉네임</div>
+										<label for="nickname">
+											<input type="text" name="nickname" id="nickname">
+										</label>
+										<div class="join_warn nickname_warn">이미 가입되어 있는 이메일입니다.</div>
+									</div>
+								</div>
+								<div class="clause">
+									<div class="clause_name">약관동의</div>
+									<div class="checkbox_area">
+										<div class="join_agreeAll">
+											<div class="sect_agree">
+												<input type="checkbox" class="agree" name="agreeAll">
+												<label class="all_txt">
+													전체 동의
+												</label>
+											</div>
+										</div>
+										<div class="join_agree">
+											<div class="sect_agree">
+												<input type="checkbox" class="agree" name="agree1">
+												<label class="clause_txt">
+													만 14세 이상입니다.
+													<span class="essential">(필수)</span>
+												</label>
+											</div>
+											<div class="sect_agree">
+												<input type="checkbox" class="agree" name="agree2">
+												<label for="agree2"></label>
+												<label class="clause_txt" for="agree2">
+													이용약관
+													<span class="essential">(필수)</span>
+												</label>
+											</div>
+											<div class="sect_agree">
+												<input type="checkbox" class="agree" name="agree3">
+												<label class="clause_txt">
+													개인정보수집 및 이용동의
+													<span class="essential">(필수)</span>
+												</label>
+											</div>
+											<div class="sect_agree">
+												<input type="checkbox" class="agree" name="agree4">
+												<label class="clause_txt">
+													개인정보 마케팅 활용 동의
+													<span class="choice">(선택)</span>
+												</label>
+											</div>
+										</div>
+									</div>
+								</div>
+								<button class="join_btn" type="submit">회원가입</button>
+							</form>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</body>
+</html>

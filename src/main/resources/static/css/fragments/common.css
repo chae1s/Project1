@@ -19,35 +19,22 @@
 .header_content .contents {
 	display: flex;
 	justify-content: space-between;
-	padding: 13px 0 15px 0;
+	padding: 15px 0;
 	background-color: #fff;
 }
 
 .header_content .contents .logo {
-	width: 152px;
-	height: 70px;
 	display: flex;
 	align-items: flex-start;
 	flex-shrink: 0;
+	width: 152px;
+	height: 76px;
+	cursor: pointer;
 }
 
-.header_content .contents .logo_text {
-	font-size: 16px;
-	font-weight: 400;
-	height: auto;
-	align-self: auto;
-	position: absolute;
-	text-align: center;
-	line-height: normal;
-	font-stretch: normal;
-	letter-spacing: 5.2px;
-}
-
-.header_content .contents .logo_text .logo_text_name {
-	font-size: 36px;
-	font-weight: 700;
-	color: #7286D3;
-	letter-spacing: 4.38px;
+.header_content .contents .logo img {
+	width: 100%;
+	height: 100%;
 }
 
 .header_content .contents .userInfo {
@@ -76,7 +63,7 @@
 
 .nav_menu {
 	display: inline-flex;
-	height: 56px;
+	height: 52px;
 }
 
 .nav_menu a {

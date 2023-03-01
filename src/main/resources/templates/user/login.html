@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+	<head>
+		<meta charset="UTF-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1">
+		<title>Insert title here</title>
+		<link rel="stylesheet" th:href="@{/css/user.css}">
+		<th:block th:replace="fragments/config :: configFragment"></th:block>
+	</head>
+	<body>
+		<div>
+			<div id="trip_wrap">
+				<div class="frame">
+					<div class="logo_contents">
+						<div class="contents">
+							<div class="logo" th:onclick="'location.href=\''+ @{/} + '\''">
+								<img alt="" th:src="@{/icons/logo_icon.png}" />
+							</div>
+						</div>
+					</div>
+					<div class="login_contents">
+						<div class="contents">
+							<div class="login_text">
+								<h2>로그인</h2>
+							</div>
+							<form th:action="@{/users/login}" method="post">
+								<div class="email_login">
+									<div class="login_input">
+										<label for="email">
+											<input type="text" name="email" id="email" placeholder="이메일">
+										</label>
+									</div>
+									<div class="login_input">
+										<label for="password">
+											<input type="password" name="email" id="password" placeholder="비밀번호">
+										</label>
+									</div>
+								</div>
+								<div class="login_error"></div>
+								<button class="login_btn" type="submit">로그인</button>
+							</form>
+							<div class="login_link">
+								<a href="#">비밀번호 찾기</a>
+								<a th:href="@{/users/join}">회원가입</a>
+							</div>
+							<div class="social_login">
+								<div class="social_icons">
+									<a href="#">
+										<img th:src="@{/icons/naver_login.png}" />
+									</a>
+									<a href="#">
+										<img th:src="@{/icons/kakao_login.png}" />
+									</a>
+									<a href="#">
+										<img th:src="@{/icons/google_login.png}" />
+									</a>
+									<a href="#">
+										<img th:src="@{/icons/twitter_login.png}" />
+									</a>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</body>
+</html>
