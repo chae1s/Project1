@@ -23,7 +23,7 @@
 							<div class="login_text">
 								<h2>로그인</h2>
 							</div>
-							<form th:action="@{/users/login}" method="post">
+							<form th:action="@{/users/login_proc}" method="post">
 								<div class="email_login">
 									<div class="login_input">
 										<label for="email">
@@ -32,7 +32,7 @@
 									</div>
 									<div class="login_input">
 										<label for="password">
-											<input type="password" name="email" id="password" placeholder="비밀번호">
+											<input type="password" name="password" id="password" placeholder="비밀번호">
 										</label>
 									</div>
 								</div>

@@ -54,6 +54,13 @@ public class SecurityConfig {
 						.usernameParameter("email")
 						.permitAll()
 						.and()
+			.logout()
+						.logoutUrl("/users/logout")
+						.logoutSuccessUrl("/")
+						.invalidateHttpSession(true)
+						.deleteCookies("JSESSIONID")
+						.permitAll()
+						.and()
 			.userDetailsService(userDetailsService);
 									
 		;

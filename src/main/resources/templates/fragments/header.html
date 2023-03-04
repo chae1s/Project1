@@ -13,7 +13,7 @@
 						<a th:href="@{/users/login}" sec:authorize="isAnonymous()">
 							<span>로그인</span>
 						</a>					
-						<a th:href="@{/users/login}" sec:authorize="isAuthenticated()">
+						<a th:href="@{/users/logout}" sec:authorize="isAuthenticated()">
 							<span>로그아웃</span>
 						</a>					
 						<a th:href="@{/users/join}" sec:authorize="isAnonymous()">

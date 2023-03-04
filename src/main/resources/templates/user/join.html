@@ -47,21 +47,21 @@
 										<label for="email">
 											<input type="text" name="email" id="email">
 										</label>
-										<div class="join_warn email_warn">이미 가입되어 있는 이메일입니다.</div>
+										<div class="join_warn email_warn"></div>
 									</div>
 									<div class="join_input">
 										<div class="input_label">비밀번호</div>
 										<label for="password">
 											<input type="password" name="password" id="password">
 										</label>
-										<div class="join_warn pw_warn">이미 가입되어 있는 이메일입니다.</div>
+										<div class="join_warn pw_warn"></div>
 									</div>
 									<div class="join_input">
 										<div class="input_label">비밀번호 확인</div>
 										<label for="passwordCheck">
 											<input type="password" name="passwordCheck" id="passwordCheck">
 										</label>
-										<div class="join_warn pwCheck_warn">이미 가입되어 있는 이메일입니다.</div>
+										<div class="join_warn pwCheck_warn">비밀번호가 일치하지 않습니다.</div>
 									</div>
 									<div class="join_input">
 										<div class="input_label">이름</div>
@@ -129,5 +129,6 @@
 				</div>
 			</div>
 		</div>
+		<script type="text/javascript" th:src="@{/js/user.js}"></script>
 	</body>
 </html>
