@@ -36,7 +36,9 @@
 										</label>
 									</div>
 								</div>
-								<div class="login_error"></div>
+								<div style="height: 14px;">
+									<div class="login_error" th:if="${error}">이메일 또는 비밀번호가 일치하지 않습니다.</div>
+								</div>
 								<button class="login_btn" type="submit">로그인</button>
 							</form>
 							<div class="login_link">

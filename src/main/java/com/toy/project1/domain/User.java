@@ -11,7 +11,6 @@ import javax.persistence.Id;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-import lombok.Setter;
 import lombok.ToString;
 
 @Entity
@@ -27,6 +26,7 @@ public class User {
 	@Column(nullable = false)
 	private String password;
 	private String name;
+	@Column(unique = true)
 	private String nickname;
 	private String fileName;
 	private boolean enabled;

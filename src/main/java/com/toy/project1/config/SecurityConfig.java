@@ -27,6 +27,7 @@ public class SecurityConfig {
 	@Autowired
 	private MyUserDetailsService userDetailsService;
 	
+	
 	@Bean
 	public InMemoryUserDetailsManager userDetailsService() {
 		UserDetails user = User.withUsername("admin@trip.com")
@@ -49,7 +50,7 @@ public class SecurityConfig {
 			.formLogin()
 						.loginPage("/users/login")
 						.defaultSuccessUrl("/")
-						.failureUrl("/users/login")
+						.failureUrl("/users/login?error=true")
 						.loginProcessingUrl("/users/login_proc")
 						.usernameParameter("email")
 						.permitAll()
