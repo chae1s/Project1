@@ -15,6 +15,8 @@ application.properties
 # yml ignore
 application.yml
 
+# mailConfig
+EmailConfig.java
 
 # External tool builders
 .externalToolBuilders/
