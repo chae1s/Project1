@@ -69,6 +69,11 @@ public class UserController {
 		return "user/login";
 	}
 	
+	@GetMapping("/findPassword")
+	public String findPw() throws Exception {
+		return "user/passwordFind";
+	}
+	
 	@GetMapping("/{id}")
 	public ModelAndView myPage(@PathVariable Long id, Principal principal) throws Exception {
 		ModelAndView mv = new ModelAndView();

@@ -50,6 +50,7 @@ public class SecurityConfig {
 									.antMatchers("/users/join").anonymous()
 									.antMatchers("/users/emailCheck").anonymous()
 									.antMatchers("/users/nicknameCheck").anonymous()
+									.antMatchers("/users/findPassword").anonymous()
 									.antMatchers("/users/**").authenticated()
 									.and()
 			.formLogin()

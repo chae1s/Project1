@@ -70,6 +70,13 @@ public class UserService {
 	}
 	
 	@Transactional
+	public void tempPW(String email, String authNum) {
+		User user = userRepository.findByEmail(email).orElseThrow(() -> new IllegalArgumentException("존재하지 않는 계정입니다."));
+		
+		user.update(encoder.encode(authNum));
+	}
+	
+	@Transactional
 	public int changePw(Long id, String prevPassword, UserUpdateRequestDTO userDTO) throws Exception {
 		User user = userRepository.findById(id).orElseThrow(() -> new IllegalArgumentException("존재하지 않는 계정입니다."));
 		
