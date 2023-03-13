@@ -14,11 +14,11 @@ import com.toy.project1.domain.Email;
 
 import lombok.RequiredArgsConstructor;
 
-@RequiredArgsConstructor
 @Service
+@RequiredArgsConstructor
 public class EmailService {
 	
-	private final JavaMailSender javaMailSender;
+	private final JavaMailSender mailSender;
 	private final SpringTemplateEngine templateEngine;
 	
 	private final UserService userService;
@@ -26,16 +26,16 @@ public class EmailService {
 	public String sendMail(Email email, String type) throws Exception {
 		String authNum = createCode(type);
 		
-//		MimeMessage mimeMessage = mailSender.createMimeMessage();
+		MimeMessage mimeMessage = mailSender.createMimeMessage();
 		
 		if(type.equals("password")) userService.tempPW(email.getTo(), authNum);
 		
-//		MimeMessageHelper mimeMessageHelper = new MimeMessageHelper(mimeMessage, false, "UTF-8");
-//		mimeMessageHelper.setTo(email.getTo());
-//		mimeMessageHelper.setSubject(email.getSubject());
-//		mimeMessageHelper.setText(setContext(authNum, type), true);
+		MimeMessageHelper mimeMessageHelper = new MimeMessageHelper(mimeMessage, false, "UTF-8");
+		mimeMessageHelper.setTo(email.getTo());
+		mimeMessageHelper.setSubject(email.getSubject());
+		mimeMessageHelper.setText(setContext(authNum, type), true);
 		
-	//	mailSender.send(mimeMessage);
+		mailSender.send(mimeMessage);
 		
 		return authNum;
 	}
