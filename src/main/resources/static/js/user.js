@@ -6,6 +6,7 @@ var pwPass = false;
 var pwCheckPass = false;
 var namePass = false;
 var nicknamePass = false; 
+var check = false;
  
  /* 메일 중복, 유효성 검사 체크 */
 $("#email").on("propertychange change keyup paste input", function() {
@@ -73,13 +74,41 @@ $("#name").on("propertychange change keyup paste input", function() {
 	}
 })
 
-$(".input").on("input blur", function() {
-	if(emailPass && pwPass && pwCheckPass && namePass && nicknamePass) {
+/* 약관 전체 동의 버튼 선택 시 */
+$("#agreeAll").on("change", function() {
+	
+	if($("#agreeAll").prop('checked')) {
+		$(".agree_num").prop('checked', true);
+		check = true;
+	} else {
+		$(".agree_num").prop('checked', false);
+		check = false;
+	}
+})
+
+/* 약관 개별로 선택했을 때의 체크 박스 */
+$(".agree").on("change", function() {
+	if($("#agree1").prop('checked') && $("#agree2").prop('checked') && $("#agree3").prop('checked') && $("#agree4").prop('checked')) {
+		$("#agreeAll").prop('checked', true);
+	} else if($("#agree1").prop('checked') && $("#agree2").prop('checked') && $("#agree3").prop('checked')){
+		check = true;
+	} else {
+		$("#agreeAll").prop('checked', false);
+		check = false;
+	}
+	
+})
+
+/* input 요소들 모두 true가 되면 버튼 disabled 해제 */
+$(".input").on("input change", function() {
+	if(emailPass && pwPass && pwCheckPass && namePass && nicknamePass && check) {
 		$(".join_btn").prop('disabled', false);
 	} else {
 		$(".join_btn").prop('disabled', true);
 	}
 })
+
+
 /* input의 value가 빈 칸일 때 */
 function inputData(data) {
 	$('.' + data + '_warn').css('color', '#D3728E');
