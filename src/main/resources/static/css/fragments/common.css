@@ -7,6 +7,7 @@
 }
 
 .header {
+	margin-bottom: 50px;
 	background-color: #fff;
 }
 
@@ -27,6 +28,7 @@
 	align-items: flex-start;
 	flex-shrink: 0;
 	width: 152px;
+	height: 76px;
 	cursor: pointer;
 }
 
@@ -49,6 +51,7 @@
 }
 
 .nav {
+	position: absolute;
 	left: 0;
 	width: 100%;
 	background-color: #fff;

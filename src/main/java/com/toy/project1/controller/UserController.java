@@ -2,24 +2,16 @@ package com.toy.project1.controller;
 
 
 
-import java.security.Principal;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.multipart.MultipartFile;
-import org.springframework.web.servlet.ModelAndView;
 
-import com.toy.project1.dto.UserResponseDTO;
 import com.toy.project1.dto.UserSaveRequestDTO;
-import com.toy.project1.dto.UserUpdateRequestDTO;
 import com.toy.project1.service.UserService;
 
 import lombok.RequiredArgsConstructor;
@@ -43,13 +35,14 @@ public class UserController {
 		userService.join(userDTO);
 		
 		return "redirect:/";
-	}	
+	}
+	
 	
 	@PostMapping("/emailCheck")
 	@ResponseBody
 	public int emailCheck(@RequestParam("email") String email) {
 		int check = userService.emailCheck(email);
-		System.out.println(check);
+		
 		return check;
 	}
 	
@@ -68,6 +61,7 @@ public class UserController {
 		
 		return "user/login";
 	}
+<<<<<<< HEAD
 	
 	@GetMapping("/findPassword")
 	public String findPw() throws Exception {
@@ -157,4 +151,6 @@ public class UserController {
 	}
 	
 	
+=======
+>>>>>>> parent of f3529ad (회원정보 수정, 비밀번호 변경, 탈퇴)
 }

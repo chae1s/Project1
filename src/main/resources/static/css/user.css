@@ -12,6 +12,7 @@
 
 .logo_contents .contents .logo {
 	width: 152px;
+	height: 76px;
 	margin: 0 auto;
 	cursor: pointer;
 }
@@ -141,9 +142,9 @@
 .join_contents .clause .checkbox_area input[type="checkbox"] {
 	position: relative;
 	top: 1.5px;
+	accent-color: #7286D3;
 	width: 14px;
 	height: 14px;
-	accent-color: #7286D3;
 }
 
 .join_contents .contents .join_btn {
@@ -236,184 +237,4 @@
 .login_contents .social_login .social_icons a img {
 	width: 48px;
 	height: 48px;
-}
-
-.edit_contents {
-	width: 1136px;
-	margin: 25px auto;
-	display: flex;
-	gap : 241px;
-}
-
-.edit_contents .edit_lists {
-	width: 146px;
-}
-
-.edit_contents .edit_lists h3 {
-	font-size: 18px;
-	font-weight: 500;
-	margin-bottom: 9px;
-}
-
-.edit_contents .edit_lists a {
-	display: block;
-	text-align: right;
-	padding-bottom: 12px;
-	font-size: 16px;
-}
-
-.edit_contents .edit_input_area h1 {
-	font-size: 22px;
-	font-weight: 500;
-	margin-bottom: 12px;
-}
-
-.edit_contents .edit_input_area .edit_img .img_area {
-	width: 120px;
-	height: 120px;
-	border-radius: 50%;
-	display: inline-block;
-	margin-right: 12px;
-	box-sizing: border-box;
-	position: relative;
-	overflow: hidden;
-}
-
-.edit_contents .edit_input_area .edit_img img {
-	position: absolute;
-	height: 100%;
-	width: auto;
-	left: 50%;
-	top: 50%;
-	transform: translate(-50%, -50%);
-}
-
-.edit_contents .edit_input_area .edit_img label {
-	display: inline-block;
-	font-size: 14px;
-	color: #D9D9D9;
-	cursor: pointer;	
-}
-
-.edit_contents .edit_input_area .edit_img .file_delete_btn {
-	display: inline-block;
-	font-size: 14px;
-	color: #eacfdb;
-	cursor: pointer;
-	margin-left: 14px;
-}
-
-.edit_contents .edit_input_area .edit_img input[type=file] {
-	display: none;
-}
-
-.edit_contents .edit_input_area .edit_input .edit {
-	margin-top: 34px;
-	display: flex;
-	gap : 62px;
-}
-
-.edit_contents .edit_input_area .edit_input .edit .input_label {
-	width: 45px;
-	font-size: 16px;
-	font-weight: 500;
-	padding-top: 13px;
-}
-
-.edit_contents .edit_input_area .pw_input .edit .input_label {
-	width: 134px;
-}
-
-.edit_contents .edit_input_area .edit_input .edit .readonly_data {
-	font-size: 16px;
-	height: 38.8px;
-	line-height: 38.8px;
-}
-
-.edit_contents .edit_input_area .edit_input .edit input {
-	width: 388px;
-	font-size: 14px;
-	border-radius: 4px;
-	border: 2px solid #D9D9D9;
-	padding: 10px 10px 8px;
-}
-
-.edit_contents .edit_input_area .pw_input .edit input {
-	width: 299px;
-}
-
-.edit_contents .edit_input_area .edit_input .edit input:focus {
-	border-color: #C4DFFF;
-}
-
-.edit_contents .edit_input_area .edit_input .edit_warn {
-	height: 14px;
-}
-
-.edit_contents .edit_input_area .edit_input .edit_introduce {
-	margin-top: 19px;
-}
-
-.edit_contents .edit_input_area .edit_input .edit textarea {
-	width: 388px;
-	font-size: 14px;
-	border-radius: 4px;
-	border: 2px solid #D9D9D9;
-	padding: 10px 10px 8px;
-	outline-color: #C4DFFF;
-	resize: none;
-	height: 80px;
-	line-height: 17px;
-}
-
-.edit_contents .edit_input_area button {
-	width: 185px;
-	height: 40px;
-	font-size: 17px;
-	font-weight: 600;
-	color: #fff;
-	background-color: #7286D3;
-	margin: 82px auto;
-	display: block;
-}
-
-.edit_contents .edit_input_area h3 {
-	font-size: 18px;
-	font-weight: 500;
-	margin: 20px 0 20px;
-}
-
-.edit_contents .edit_input_area .delete_content {
-	width: 519px;
-	padding: 10px;
-	border: 1px solid #D9D9D9;
-	line-height: 21px;
-	border-radius: 4px;
-	font-size: 15px;
-}
-
-.edit_contents .edit_input_area .delete_content h3 {
-	font-size: 17px;
-	margin: 5px 0 15px;
-}
-
-.edit_contents .edit_input_area .check_content {
-	margin-top: 10px;
-	font-size: 15px;
-}
-
-.edit_contents .edit_input_area .check_content input[type="checkbox"] {
-	width: 16px;
-	height: 16px;
-	top: 1.5px;
-	accent-color: #7286D3;
-}
-
-.edit_contents .edit_input_area .check_content label {
-	top: -1.5px;
-}
-
-.edit_contents .edit_input_area .check_content label span {
-	color: #D3728E;
-	margin-left: 10px;
 }

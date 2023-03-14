@@ -6,9 +6,7 @@ var pwPass = false;
 var pwCheckPass = false;
 var namePass = false;
 var nicknamePass = false; 
-var check = false;
-
-
+ 
  /* 메일 중복, 유효성 검사 체크 */
 $("#email").on("propertychange change keyup paste input", function() {
 	var email = $("#email").val();
@@ -30,6 +28,7 @@ $("#nickname").on("propertychange change keyup paste input", function() {
 		nicknameCheck(nickname);
 	}
 })
+
 
  /* 비밀번호 유효성 검사, 비밀번호 확인과 일치 체크 */
 $("#password").on("propertychange change keyup paste input", function() {	
@@ -62,7 +61,6 @@ $("#passwordCheck").on("propertychange change keyup paste input", function() {
 	
 })
 
-/* 이름 유효성검사 체크 */
 $("#name").on("propertychange change keyup paste input", function() {
 	var name = $("#name").val();
 	if(name.length == 0) {
@@ -75,51 +73,13 @@ $("#name").on("propertychange change keyup paste input", function() {
 	}
 })
 
-/* 약관 전체 동의 버튼 선택 시 */
-$("#agreeAll").on("change", function() {
-	
-	if($("#agreeAll").prop('checked')) {
-		$(".agree_num").prop('checked', true);
-		check = true;
-	} else {
-		$(".agree_num").prop('checked', false);
-		check = false;
-	}
-})
-
-/* 약관 개별로 선택했을 때의 체크 박스 */
-$(".agree").on("change", function() {
-	if($("#agree1").prop('checked') && $("#agree2").prop('checked') && $("#agree3").prop('checked') && $("#agree4").prop('checked')) {
-		$("#agreeAll").prop('checked', true);
-	} else if($("#agree1").prop('checked') && $("#agree2").prop('checked') && $("#agree3").prop('checked')){
-		check = true;
-	} else {
-		$("#agreeAll").prop('checked', false);
-		check = false;
-	}
-	
-	console.log(check);
-})
-
-/* input 요소들 모두 true가 되면 버튼 disabled 해제 */
-$(".input").on("input change", function() {
-	if(emailPass && pwPass && pwCheckPass && namePass && nicknamePass && check) {
+$(".input").on("input blur", function() {
+	if(emailPass && pwPass && pwCheckPass && namePass && nicknamePass) {
 		$(".join_btn").prop('disabled', false);
 	} else {
 		$(".join_btn").prop('disabled', true);
 	}
-	console.log(emailPass && pwPass && pwCheckPass && namePass && nicknamePass && check);
 })
-
-/* 닉네임 중복, 유효성 검사 체크 */
-$("#nickname_edit").on("propertychange change keyup paste input", function() {
-	var nickname = $("#nickname_edit").val();
-	if(nickname == "") {
-	} else {		
-		nicknameCheck(nickname);
-	}
-})
-
 /* input의 value가 빈 칸일 때 */
 function inputData(data) {
 	$('.' + data + '_warn').css('color', '#D3728E');
@@ -151,7 +111,7 @@ function emailCheck(email) {
 				$("#email").css('border', '2px solid #D3728E');
 				emailPass = false;
 			}
-			abc = check;
+			
 		},
 		error : function(jqXHR, textStatus, errorThrown) {
 			console.log("ERROR : " + textStatus + " : " + errorThrown);
@@ -159,8 +119,6 @@ function emailCheck(email) {
 		
 	});
 }
-
-
 
 /* 닉네임 중복 확인 함수 */
 function nicknameCheck(nickname) {
@@ -211,7 +169,6 @@ function passwordMatch(password, passwordCheck) {
 	}
 }
 
-/* 비밀번호 유효성 검사 */
 function passwordReg(password) {
 	var pwReg = /^(?=.*[A-Za-z])(?=.*\d)(?=.*[~!-@#$%^&*+|=])[A-Za-z\d~!-@#$%^&*+|=]{6,20}$/;
 	
@@ -227,5 +184,4 @@ function passwordReg(password) {
 		pwPass = false;
 	}
 }
-
 

@@ -19,7 +19,7 @@
 						<a th:href="@{/users/join}" sec:authorize="isAnonymous()">
 							<span>회원가입</span>
 						</a>				
-						<a th:href="@{/users/{id}(id=${#authentication.principal.user.id})}" sec:authorize="isAuthenticated()">
+						<a th:href="@{/users/login}" sec:authorize="isAuthenticated()">
 							<span>내정보</span>
 						</a>	
 						<a th:href="@{/users/login}">

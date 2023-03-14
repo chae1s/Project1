@@ -41,7 +41,6 @@ public class UserSaveRequestDTO {
 				.password(password)
 				.name(name)
 				.nickname(nickname)
-				.fileName("profil.png")
 				.enabled(true)
 				.role(Role.ROLE_USER)
 				.build();

@@ -44,14 +44,17 @@ public class SecurityConfig {
 			.cors()
 			.and()
 			.csrf().disable()
-			.authorizeRequests()
+			.authorizeHttpRequests()
 									.antMatchers("/").permitAll()
+<<<<<<< HEAD
 									.antMatchers("/users/login").permitAll()
 									.antMatchers("/users/join").anonymous()
 									.antMatchers("/users/emailCheck").anonymous()
 									.antMatchers("/users/nicknameCheck").anonymous()
 									.antMatchers("/users/findPassword").anonymous()
 									.antMatchers("/users/**").authenticated()
+=======
+>>>>>>> parent of f3529ad (회원정보 수정, 비밀번호 변경, 탈퇴)
 									.and()
 			.formLogin()
 						.loginPage("/users/login")
