@@ -52,7 +52,7 @@ public class EmailService {
 				
 				switch (index) {
 					case 0: sb.append((char)((int) random.nextInt(26) + 97)); break;
-					case 1: sb.append((char)((int) random.nextInt(26) + 54)); break;
+					case 1: sb.append((char)((int) random.nextInt(26) + 65)); break;
 					default: sb.append(random.nextInt(9));
 				}
 			}
