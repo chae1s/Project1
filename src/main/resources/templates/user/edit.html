@@ -16,20 +16,20 @@
 					<div class="edit_lists">
 						<h3>내 정보</h3>
 						<div>
-							<a th:href="@{/users/edit/{id}(id=${#authentication.principal.user.id})}" style="font-weight: 500">회원정보 수정</a>
-							<a th:href="@{/users/edit/password/{id}(id=${#authentication.principal.user.id})}">비밀번호 변경</a>
-							<a th:href="@{/users/delete/{id}(id=${#authentication.principal.user.id})}">회원 탈퇴</a>
+							<a th:href="@{/users/edit/{id}(id=${#authentication.principal.id})}" style="font-weight: 500">회원정보 수정</a>
+							<a th:href="@{/users/edit/password/{id}(id=${#authentication.principal.id})}">비밀번호 변경</a>
+							<a th:href="@{/users/delete/{id}(id=${#authentication.principal.id})}">회원 탈퇴</a>
 						</div>
 					</div>
 					<div class="edit_input_area">
 						<h1>회원정보 수정</h1>
 						<div class="edit_img">
 							<div class="img_area">
-								<img alt="" th:src="@{/images/upload/user/} + ${userDTO.fileName}" id="profil_img"/>
+								<img alt="" th:src="@{/images/upload/user/} + ${userDTO.profile_image}" id="profile_img"/>
 							</div>
 							<label for="file">프로필 사진 바꾸기</label>
-							<div class="file_delete_btn" th:if="${userDTO.fileName!='profil.png'}">프로필 사진 삭제</div>
-							<form enctype="multipart/form-data" role="presentation" id="profil_form">
+							<div class="file_delete_btn" th:if="${userDTO.profile_image!='profile.png'}">프로필 사진 삭제</div>
+							<form enctype="multipart/form-data" role="presentation" id="profile_form">
 								<input type="file" name="file" id="file">
 							</form>
 						</div>
@@ -122,7 +122,7 @@
 			
 			
 			function fileEdit() {
-				var formData = new FormData($("#profil_form")[0]);
+				var formData = new FormData($("#profile_form")[0]);
 				
 				$.ajax({
 					url : "/users/edit/file/"+id, 
@@ -131,7 +131,7 @@
 					processData: false,
 		            contentType: false,
 					success : function(fileName) {
-						$("#profil_img").attr("src", "/images/upload/user/"+fileName.trim());
+						$("#profile_img").attr("src", "/images/upload/user/"+fileName.trim());
 						$(".file_delete_btn").show();
 					},
 					error : function(jqXHR, textStatus, errorThrown) {
@@ -147,7 +147,7 @@
 					success : function(result) {
 						if(result) {
 							console.log("프로필 삭제");
-							$("#profil_img").attr("src", "/images/upload/user/profil.png");
+							$("#profile_img").attr("src", "/images/upload/user/profile.png");
 							$(".file_delete_btn").hide();
 						} else {
 							alert("프로필 사진이 삭제되지 못했습니다.");

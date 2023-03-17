@@ -1,6 +1,7 @@
 package com.toy.project1.dto;
 
 
+import com.toy.project1.domain.AuthId;
 import com.toy.project1.domain.Role;
 import com.toy.project1.domain.User;
 
@@ -19,6 +20,7 @@ public class UserSaveRequestDTO {
 	private String password;
 	private String name;
 	private String nickname;
+	private AuthId authId;
 	
 	public void encryptPassword(String BCryptpassword) {
 		this.password = BCryptpassword;
@@ -26,12 +28,13 @@ public class UserSaveRequestDTO {
 	
 	
 	@Builder
-	public UserSaveRequestDTO(Long id, String email, String password, String name, String nickname) {
+	public UserSaveRequestDTO(Long id, String email, String password, String name, String nickname, AuthId authId) {
 		this.id = id;
 		this.email = email;
 		this.password = password;
 		this.name = name;
 		this.nickname = nickname;
+		this.authId = authId;
 	}
 	
 	public User toEntity() {
@@ -41,7 +44,8 @@ public class UserSaveRequestDTO {
 				.password(password)
 				.name(name)
 				.nickname(nickname)
-				.fileName("profil.png")
+				.profile_image("profile.png")
+				.authId(authId)
 				.enabled(true)
 				.role(Role.ROLE_USER)
 				.build();

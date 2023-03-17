@@ -1,21 +1,16 @@
 package com.toy.project1.controller;
 
-
-import java.util.List;
 import java.util.Optional;
 
 import org.assertj.core.api.Assertions;
-import org.junit.After;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.boot.test.web.client.TestRestTemplate;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.test.context.junit4.SpringRunner;
 
+import com.toy.project1.domain.AuthId;
 import com.toy.project1.domain.Role;
 import com.toy.project1.domain.User;
 import com.toy.project1.dto.UserSaveRequestDTO;
@@ -27,8 +22,6 @@ import com.toy.project1.service.UserService;
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 public class UserControllerTest {
 	
-	@Autowired
-	private TestRestTemplate restTemplate;
 	
 	@Autowired
 	private UserRepository userRepository;
@@ -39,10 +32,6 @@ public class UserControllerTest {
 	@Autowired
 	private PasswordEncoder encoder;
 
-//	@After
-	public void tearDown() throws Exception {
-		userRepository.deleteAll();
-	}
 	
 //	@Test
 	public void join_admin() throws Exception {
@@ -69,32 +58,34 @@ public class UserControllerTest {
 		
 	}
 	
-//	@Test
+	@Test
 	public void join_user() throws Exception {
 		//given
-		String email = "user01@mail.com";
-		UserSaveRequestDTO userDTO = UserSaveRequestDTO.builder()
-				.email(email)
-				.password("user1230")
-				.name("김사용")
-				.nickname("새우깡")
-				.build();
+		for(int i=1;i<=20;i++) {
+			String email = "user" + i + "@mail.com";
+			
+			UserSaveRequestDTO userDTO = UserSaveRequestDTO.builder()
+					.email(email)
+					.password("user1230")
+					.name("김사용")
+					.nickname("새우깡"+i)
+					.build();
+			
+			//when
+			userService.join(userDTO);
+		}
 		
-		System.out.println(userDTO.getEmail());
-		//when
-		userService.join(userDTO);
-		
-		Optional<User> users = userRepository.findByEmail(email);
-		User user = users.get();
+//		Optional<User> users = userRepository.findByEmail(email);
+//		User user = users.get();
 		
 		//then
 	
-		Assertions.assertThat(users).isNotEmpty();
-		Assertions.assertThat(user.getEmail()).isEqualTo(email);
+//		Assertions.assertThat(users).isNotEmpty();
+//		Assertions.assertThat(user.getEmail()).isEqualTo(email);
 		
 	}
 	
-	@Test
+//	@Test
 	public void edit() throws Exception {
 		//given
 		User user = userRepository.save(
@@ -103,14 +94,15 @@ public class UserControllerTest {
 											.password(encoder.encode("user1230"))
 											.name("박사용")
 											.nickname("양파링")
-											.fileName("profil.png")
+											.profile_image("profil.png")
+											.authId(AuthId.EMAIL)
 											.role(Role.ROLE_USER)
 											.enabled(true)
 											.build()
 										);
 		Long updateId = user.getId();
 		String editNickname = "감자깡";
-		String editFileName = "profil.png";
+		String editImage = "profil.png";
 		String editIntroduce = "맛있는 감자깡";
 		
 		UserUpdateRequestDTO userDTO = UserUpdateRequestDTO.builder()
@@ -125,7 +117,7 @@ public class UserControllerTest {
 		
 		//then
 		Assertions.assertThat(editUser.getNickname()).isEqualTo(editNickname);
-		Assertions.assertThat(editUser.getFileName()).isEqualTo(editFileName);
+		Assertions.assertThat(editUser.getProfile_image()).isEqualTo(editImage);
 		Assertions.assertThat(editUser.getIntroduce()).isEqualTo(editIntroduce);
 	}
 

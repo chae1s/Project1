@@ -1,6 +1,5 @@
 package com.toy.project1.config;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
@@ -24,8 +23,8 @@ import lombok.AllArgsConstructor;
 @AllArgsConstructor
 public class SecurityConfig {
 	
-	@Autowired
-	private MyUserDetailsService userDetailsService;
+	
+	private final MyUserDetailsService userDetailsService;
 	
 	
 	@Bean
@@ -46,7 +45,7 @@ public class SecurityConfig {
 			.csrf().disable()
 			.authorizeRequests()
 									.antMatchers("/").permitAll()
-									.antMatchers("/users/login").permitAll()
+									.antMatchers("/users/login/**").anonymous()
 									.antMatchers("/users/join").anonymous()
 									.antMatchers("/users/emailCheck").anonymous()
 									.antMatchers("/users/nicknameCheck").anonymous()
@@ -69,9 +68,11 @@ public class SecurityConfig {
 						.deleteCookies("JSESSIONID")
 						.permitAll()
 						.and()
-			.userDetailsService(userDetailsService);
+			.userDetailsService(userDetailsService)
+			.oauth2Login()
+			.userInfoEndpoint()
+			;
 									
-		;
 		
 		return http.build();
 	}

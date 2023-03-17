@@ -1,6 +1,5 @@
 package com.toy.project1.service;
 
-import java.util.List;
 import java.util.Optional;
 import java.util.regex.Pattern;
 
@@ -9,6 +8,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 
+import com.toy.project1.domain.AuthId;
 import com.toy.project1.domain.User;
 import com.toy.project1.dto.UserResponseDTO;
 import com.toy.project1.dto.UserSaveRequestDTO;
@@ -31,7 +31,7 @@ public class UserService {
 	@Transactional
 	public void join(UserSaveRequestDTO userDTO) {
 		userDTO.encryptPassword(encoder.encode(userDTO.getPassword()));
-		
+		userDTO.setAuthId(AuthId.EMAIL);
 		User user = userDTO.toEntity();
 		
 		userRepository.save(user);
@@ -42,14 +42,14 @@ public class UserService {
 	public void edit(Long id, UserUpdateRequestDTO userDTO) {
 		User user = userRepository.findById(id).orElseThrow(() -> new IllegalArgumentException("존재하지 않는 계정입니다."));
 		System.out.println(userDTO.getIntroduce());
-		user.update(userDTO.getNickname(), user.getFileName(), userDTO.getIntroduce());
+		user.update(userDTO.getNickname(), user.getProfile_image(), userDTO.getIntroduce());
 	}
 	
 	@Transactional
 	public String editFile(Long id, UserUpdateRequestDTO userDTO, MultipartFile file) throws Exception {
 		User user = userRepository.findById(id).orElseThrow(() -> new IllegalArgumentException("존재하지 않는 계정입니다."));
 		
-		String fileName = user.getFileName();
+		String fileName = user.getProfile_image();
 		if(file != null && !file.isEmpty()) {
 			fileName = fileHandelr.fileUpload("images/upload/user", file);
 		}
@@ -61,10 +61,10 @@ public class UserService {
 	@Transactional
 	public boolean deleteFile(Long id, UserUpdateRequestDTO userDTO) throws Exception {
 		User user = userRepository.findById(id).orElseThrow(() -> new IllegalArgumentException("존재하지 않는 계정입니다."));
-		boolean result = fileHandelr.fileDelete("images/upload/user", user.getFileName());
+		boolean result = fileHandelr.fileDelete("images/upload/user", user.getProfile_image());
 		
 		if(result) {
-			user.update(user.getNickname(), "profil.png", user.getIntroduce());
+			user.update(user.getNickname(), "profile.png", user.getIntroduce());
 		}
 		
 		return result;
@@ -106,8 +106,8 @@ public class UserService {
 	@Transactional
 	public void delete(Long id) throws Exception {
 		User user = userRepository.findById(id).orElseThrow(() -> new IllegalArgumentException("존재하지 않는 계정입니다."));
-		if(!user.getFileName().equals("profil.png")) {			
-			fileHandelr.fileDelete("images/upload/user", user.getFileName());
+		if(!user.getProfile_image().equals("profile.png")) {			
+			fileHandelr.fileDelete("images/upload/user", user.getProfile_image());
 		}
 		userRepository.delete(user);
 	}

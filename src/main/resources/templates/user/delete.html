@@ -16,9 +16,9 @@
 					<div class="edit_lists">
 						<h3>내 정보</h3>
 						<div>
-							<a th:href="@{/users/edit/{id}(id=${#authentication.principal.user.id})}">회원정보 수정</a>
-							<a th:href="@{/users/edit/password/{id}(id=${#authentication.principal.user.id})}">비밀번호 변경</a>
-							<a th:href="@{/users/delete/{id}(id=${#authentication.principal.user.id})}" style="font-weight: 500">회원 탈퇴</a>
+							<a th:href="@{/users/edit/{id}(id=${#authentication.principal.id})}">회원정보 수정</a>
+							<a th:href="@{/users/edit/password/{id}(id=${#authentication.principal.id})}">비밀번호 변경</a>
+							<a th:href="@{/users/delete/{id}(id=${#authentication.principal.id})}" style="font-weight: 500">회원 탈퇴</a>
 						</div>
 					</div>
 					<div class="edit_input_area">
@@ -33,7 +33,7 @@
 								먼저 해당 게시물을 삭제 하신 후, 탈퇴를 신청하시기 바랍니다.
 							</div>
 						</div>
-						<form th:action="@{/users/delete/{id}(id=${#authentication.principal.user.id})}" method="post" class="delete_form">
+						<form th:action="@{/users/delete/{id}(id=${#authentication.principal.id})}" method="post" class="delete_form">
 							<div class="check_content">
 								<input type="checkbox" id="checked" name="checked">
 								<label>위 내용을 모두 확인하였습니다. <span>필수</span></label>

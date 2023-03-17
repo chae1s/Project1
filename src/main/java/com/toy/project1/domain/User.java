@@ -23,12 +23,13 @@ public class User {
 	private Long id;
 	@Column(nullable = false, unique = true)
 	private String email;
-	@Column(nullable = false)
 	private String password;
 	private String name;
 	@Column(unique = true)
 	private String nickname;
-	private String fileName;
+	private String profile_image;
+	@Enumerated(EnumType.STRING)
+	private AuthId authId;
 	@Lob
 	private String introduce;
 	private boolean enabled;
@@ -37,21 +38,22 @@ public class User {
 	private Role role;
 	
 	@Builder
-	public User(Long id, String email, String password, String name, String nickname, String fileName, String introduce, boolean enabled, Role role) {
+	public User(Long id, String email, String password, String name, String nickname, String profile_image, AuthId authId,String introduce, boolean enabled, Role role) {
 		this.id = id;
 		this.email = email;
 		this.password = password;
 		this.name = name;
 		this.nickname = nickname;
-		this.fileName = fileName;
+		this.profile_image = profile_image;
+		this.authId = authId;
 		this.introduce = introduce;
 		this.enabled = enabled;
 		this.role = role;
 	}
 	
-	public void update(String nickname, String fileName, String introduce) {
+	public void update(String nickname, String profile_image, String introduce) {
 		this.nickname = nickname;
-		this.fileName = fileName;
+		this.profile_image = profile_image;
 		this.introduce = introduce;
 	}
 	

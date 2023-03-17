@@ -9,11 +9,15 @@ public class MyUserPrincipal extends org.springframework.security.core.userdetai
 	
 	private static final long serialVersionUID = 1L;
 	
+	private Long id;
+	private String email;
 	private User user;
 	
 	public MyUserPrincipal(User user) {
 		super(user.getEmail(), user.getPassword(), AuthorityUtils.createAuthorityList(user.getRole().toString()));
 		
+		this.id = user.getId();
+		this.email = user.getEmail();
 		this.user = user;
 	}
 }

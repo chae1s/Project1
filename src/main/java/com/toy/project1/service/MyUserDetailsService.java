@@ -12,7 +12,10 @@ import com.toy.project1.domain.MyUserPrincipal;
 import com.toy.project1.domain.User;
 import com.toy.project1.repository.UserRepository;
 
+import lombok.RequiredArgsConstructor;
+
 @Service
+@RequiredArgsConstructor
 public class MyUserDetailsService implements UserDetailsService {
 	
 	@Autowired

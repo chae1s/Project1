@@ -1,10 +1,8 @@
 package com.toy.project1.controller;
 
-
-
 import java.security.Principal;
 
-import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -20,6 +18,7 @@ import org.springframework.web.servlet.ModelAndView;
 import com.toy.project1.dto.UserResponseDTO;
 import com.toy.project1.dto.UserSaveRequestDTO;
 import com.toy.project1.dto.UserUpdateRequestDTO;
+import com.toy.project1.service.CustomOAuth2UserService;
 import com.toy.project1.service.UserService;
 
 import lombok.RequiredArgsConstructor;
@@ -29,8 +28,10 @@ import lombok.RequiredArgsConstructor;
 @RequiredArgsConstructor
 public class UserController {
 	
-	@Autowired
-	private UserService userService;
+
+	private final UserService userService;
+	
+	private final CustomOAuth2UserService customOAuth2UserService;
 	
 	@GetMapping("/join")
 	public String join() throws Exception {
@@ -70,6 +71,14 @@ public class UserController {
 		return "user/login";
 	}
 	
+	@GetMapping("/login/oauth2/code/kakao")
+	public String login(@RequestParam(required = false) String code) throws Exception {
+		
+		String token = customOAuth2UserService.getKakaoAccessToken(code);
+		customOAuth2UserService.saveKakaoUser(token);
+		return "redirect:/";
+	}
+	
 	@GetMapping("/findPassword")
 	public String findPw() throws Exception {
 		return "user/passwordFind";
@@ -90,8 +99,7 @@ public class UserController {
 	public ModelAndView edit(@PathVariable Long id, Principal principal) throws Exception {
 		ModelAndView mv = new ModelAndView();
 		UserResponseDTO userDTO = userService.findById(id);
-		
-		if(!principal.getName().equals(userDTO.getEmail())) {
+		if(!principal.getName().contains(userDTO.getEmail())) {
 			throw new IllegalArgumentException("이 페이지 이용 불가");
 		}
 		mv.addObject("userDTO", userDTO);

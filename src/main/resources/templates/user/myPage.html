@@ -12,8 +12,8 @@
 	<div id="trip_wrap">
 		<div class="frame">
 			<div th:replace="fragments/header :: menu"></div>
-			<h2 th:text="${#authentication.principal.user.id}"></h2>
-			<a th:href="@{/users/edit/{id}(id=${#authentication.principal.user.id})}" sec:authorize="isAuthenticated()">
+			<h2 th:text="${#authentication.principal.id}"></h2>
+			<a th:href="@{/users/edit/{id}(id=${#authentication.principal.id})}" sec:authorize="isAuthenticated()">
 				<span>내정보 수정</span>
 			</a>	
 		</div>

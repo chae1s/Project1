@@ -11,7 +11,7 @@ public class UserResponseDTO {
 	private String email;
 	private String name;
 	private String nickname;
-	private String fileName;
+	private String profile_image;
 	private String introduce;
 	
 	
@@ -20,7 +20,7 @@ public class UserResponseDTO {
 		this.email = user.getEmail();
 		this.name = user.getName();
 		this.nickname = user.getNickname();
-		this.fileName = user.getFileName();
+		this.profile_image = user.getProfile_image();
 		this.introduce = user.getIntroduce();
 	}
 }
