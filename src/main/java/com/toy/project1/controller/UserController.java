@@ -2,7 +2,9 @@ package com.toy.project1.controller;
 
 import java.security.Principal;
 
-import org.springframework.security.core.Authentication;
+import javax.servlet.http.HttpSession;
+
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -15,6 +17,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.toy.project1.domain.AuthId;
 import com.toy.project1.dto.UserResponseDTO;
 import com.toy.project1.dto.UserSaveRequestDTO;
 import com.toy.project1.dto.UserUpdateRequestDTO;
@@ -74,8 +77,18 @@ public class UserController {
 	@GetMapping("/login/oauth2/code/kakao")
 	public String login(@RequestParam(required = false) String code) throws Exception {
 		
-		String token = customOAuth2UserService.getKakaoAccessToken(code);
-		customOAuth2UserService.saveKakaoUser(token);
+		String access_token = customOAuth2UserService.getKakaoAccessToken(code);
+		customOAuth2UserService.saveKakao(access_token);
+		
+		return "redirect:/";
+	}
+	
+	@GetMapping("/oauth2/logout")
+	public String logout(HttpSession session) throws Exception {
+		
+		customOAuth2UserService.logoutKakao(session.getAttribute("access_token").toString());
+		SecurityContextHolder.clearContext();
+		
 		return "redirect:/";
 	}
 	
@@ -155,14 +168,23 @@ public class UserController {
 	
 	@GetMapping("/delete/{id}")
 	public String delete() throws Exception {
+		
 		return "user/delete";
 	}
 	
 	@PostMapping("/delete/{id}")
-	public String delete(@PathVariable Long id) throws Exception {
-		userService.delete(id);
+	public String delete(@PathVariable Long id, HttpSession session) throws Exception {
+		UserResponseDTO userDTO = userService.findById(id);
+		if(userDTO.getAuthId().equals(AuthId.EMAIL)) {
+			userService.delete(id);
+		} else if(userDTO.getAuthId().equals(AuthId.KAKAO)) {
+			customOAuth2UserService.unlinkKakao(session.getAttribute("access_token").toString(), id);
+			session.removeAttribute("access_token");
+		}
 		
-		return "redirect:/users/logout";
+		SecurityContextHolder.clearContext();
+		
+		return "redirect:/";
 	}
 	
 }

@@ -51,6 +51,10 @@ public class User {
 		this.role = role;
 	}
 	
+	public void update(Long id) {
+		this.id = id;
+	}
+	
 	public void update(String nickname, String profile_image, String introduce) {
 		this.nickname = nickname;
 		this.profile_image = profile_image;

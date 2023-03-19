@@ -23,6 +23,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.toy.project1.domain.AuthId;
 import com.toy.project1.domain.User;
 import com.toy.project1.dto.UserSaveRequestDTO;
+import com.toy.project1.handler.FileHandler;
 import com.toy.project1.repository.UserRepository;
 
 import lombok.RequiredArgsConstructor;
@@ -33,6 +34,7 @@ public class CustomOAuth2UserService {
 	
 	private final UserRepository userRepository;
 	private final HttpServletRequest request;
+	private final FileHandler fileHandelr;
 	
 	
 	public String getKakaoAccessToken (String code) throws Exception {
@@ -51,7 +53,7 @@ public class CustomOAuth2UserService {
         BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(conn.getOutputStream()));
         StringBuilder sb = new StringBuilder();
         sb.append("grant_type=authorization_code");
-        sb.append("&client_id=a2854f3149b99cbd369249697d4babf9"); // TODO REST_API_KEY 입력
+        sb.append("&client_id=69e1593ec2fbbf39b11fa2c6e3e8c000"); // TODO REST_API_KEY 입력
         sb.append("&redirect_uri=http://localhost/users/login/oauth2/code/kakao"); // TODO 인가코드 받은 redirect_uri 입력
         sb.append("&client_secret=z5DXnZr18jL82gl6xuTRxiPpviAs1FO4");
         sb.append("&code=" + code);
@@ -87,7 +89,7 @@ public class CustomOAuth2UserService {
         return access_token;
     }
 	
-	public void saveKakaoUser(String access_token) throws Exception {
+	public void saveKakao(String access_token) throws Exception {
 		String reqURL = "https://kapi.kakao.com/v2/user/me";
 		
 		URL url = new URL(reqURL);
@@ -110,24 +112,70 @@ public class CustomOAuth2UserService {
 		
 		ObjectMapper objectMapper = new ObjectMapper();
 		JsonNode jsonNode = objectMapper.readTree(result);
-		Long id = jsonNode.get("id").asLong();
 		Boolean has_email = jsonNode.get("kakao_account").get("has_email").asBoolean();
 		String email = "";
 		String nickname = jsonNode.get("properties").get("nickname").asText();
 		
 		if(has_email) email = jsonNode.get("kakao_account").get("email").asText();
 		
-		UserSaveRequestDTO userDTO = new UserSaveRequestDTO();
-		userDTO.setId(id);
-		userDTO.setEmail(email);
-		userDTO.setName(nickname);
-		userDTO.setNickname(nickname);
-		userDTO.setAuthId(AuthId.KAKAO);
+		UserSaveRequestDTO userDTO = UserSaveRequestDTO.builder()
+				.email(email)
+				.nickname(nickname)
+				.name(nickname)
+				.authId(AuthId.KAKAO)
+				.build();
 		
 		User user = save(userDTO);
-		forceLogin(user);
+		forceLogin(user, access_token);
 		
 		br.close();
+	}
+	
+	public void logoutKakao(String access_token) throws Exception {
+		String reqURL = "https://kapi.kakao.com/v1/user/logout";
+		URL url = new URL(reqURL);
+		HttpURLConnection conn = (HttpURLConnection)url.openConnection();
+		
+		conn.setRequestMethod("POST");
+		conn.setRequestProperty("Authorization", "Bearer " + access_token);
+		
+		int responseCode = conn.getResponseCode();
+		System.out.println("responseCode : " + responseCode);
+		
+		BufferedReader br = new BufferedReader(new InputStreamReader(conn.getInputStream()));
+		
+		String result = "";
+		String line = "";
+		
+		while((line = br.readLine()) != null) {
+			result += line;
+		}
+		System.out.println(result);
+	}
+	
+	public void unlinkKakao(String access_token, Long id) throws Exception {
+		String reqURL = "https://kapi.kakao.com/v1/user/unlink";
+		URL url = new URL(reqURL);
+		HttpURLConnection conn = (HttpURLConnection)url.openConnection();
+		
+		conn.setRequestMethod("POST");
+		conn.setRequestProperty("Authorization", "Bearer " + access_token);
+		
+		int responseCode = conn.getResponseCode();
+		System.out.println("responseCode : " + responseCode);
+		
+		BufferedReader br = new BufferedReader(new InputStreamReader(conn.getInputStream()));
+		
+		String result = "";
+		String line = "";
+		
+		while((line = br.readLine()) != null) {
+			result += line;
+		}
+		
+		if(!result.equals("")) {
+			delete(id);
+		}
 	}
 	
 	private User save(UserSaveRequestDTO userDTO) {
@@ -137,7 +185,7 @@ public class CustomOAuth2UserService {
 		return userRepository.save(user);
 	}
 	
-	private void forceLogin(User user) {
+	private void forceLogin(User user, String access_token) {
 		Authentication authentication = new UsernamePasswordAuthenticationToken(user, user.getPassword(), AuthorityUtils.createAuthorityList(user.getRole().toString()));
 		
 		SecurityContext securityContext = SecurityContextHolder.getContext();
@@ -146,6 +194,16 @@ public class CustomOAuth2UserService {
 		HttpSession httpSession = request.getSession(true);
 		httpSession.setAttribute(HttpSessionSecurityContextRepository.SPRING_SECURITY_CONTEXT_KEY, securityContext);
 		
+		httpSession.setAttribute("access_token", access_token);
+	}
+	
+	private void delete(Long id) throws Exception {
+		User user = userRepository.findById(id).orElseThrow(() -> new IllegalArgumentException("존재하지 않는 계정입니다."));
+		if(!user.getProfile_image().equals("profile.png")) {			
+			fileHandelr.fileDelete("images/upload/user", user.getProfile_image());
+		}
+		
+		userRepository.delete(user);
 	}
 
 }

@@ -12,6 +12,7 @@ public class MyUserPrincipal extends org.springframework.security.core.userdetai
 	private Long id;
 	private String email;
 	private User user;
+	private AuthId authId;
 	
 	public MyUserPrincipal(User user) {
 		super(user.getEmail(), user.getPassword(), AuthorityUtils.createAuthorityList(user.getRole().toString()));
@@ -19,5 +20,6 @@ public class MyUserPrincipal extends org.springframework.security.core.userdetai
 		this.id = user.getId();
 		this.email = user.getEmail();
 		this.user = user;
+		this.authId = user.getAuthId();
 	}
 }

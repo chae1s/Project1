@@ -1,5 +1,6 @@
 package com.toy.project1.dto;
 
+import com.toy.project1.domain.AuthId;
 import com.toy.project1.domain.User;
 
 import lombok.Getter;
@@ -12,6 +13,7 @@ public class UserResponseDTO {
 	private String name;
 	private String nickname;
 	private String profile_image;
+	private AuthId authId;
 	private String introduce;
 	
 	
@@ -21,6 +23,7 @@ public class UserResponseDTO {
 		this.name = user.getName();
 		this.nickname = user.getNickname();
 		this.profile_image = user.getProfile_image();
+		this.authId = user.getAuthId();
 		this.introduce = user.getIntroduce();
 	}
 }

@@ -46,6 +46,7 @@ public class SecurityConfig {
 			.authorizeRequests()
 									.antMatchers("/").permitAll()
 									.antMatchers("/users/login/**").anonymous()
+									.antMatchers("/oauth2/**").anonymous()
 									.antMatchers("/users/join").anonymous()
 									.antMatchers("/users/emailCheck").anonymous()
 									.antMatchers("/users/nicknameCheck").anonymous()
@@ -70,7 +71,6 @@ public class SecurityConfig {
 						.and()
 			.userDetailsService(userDetailsService)
 			.oauth2Login()
-			.userInfoEndpoint()
 			;
 									
 		
