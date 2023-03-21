@@ -74,24 +74,23 @@ public class UserController {
 		return "user/login";
 	}
 	
-	@GetMapping("/login/oauth2/code/kakao")
-	public String login(@RequestParam(required = false) String code) throws Exception {
-		
-		String access_token = customOAuth2UserService.getKakaoAccessToken(code);
-		customOAuth2UserService.saveKakao(access_token);
-		System.out.println(code);
+	@GetMapping("/login/oauth2/code/{authId}")
+	public String login(@RequestParam(required = false) String code, @RequestParam(required = false)String state, @PathVariable String authId) throws Exception {
+		String access_token = "";
+		if(authId.equals("kakao")) {			
+			access_token = customOAuth2UserService.getKakaoAccessToken(code);
+			customOAuth2UserService.saveKakao(access_token);
+		} else if(authId.equals("naver")) {
+			access_token = customOAuth2UserService.getNaverAccessToken(code, state);
+			customOAuth2UserService.saveNaver(access_token);
+		} else if(authId.equals("google")) {
+			access_token = customOAuth2UserService.getGoogleAccessToken(code);
+			customOAuth2UserService.saveGoogle(access_token);
+		}
 		
 		return "redirect:/";
 	}
 	
-	@GetMapping("/login/oauth2/code/naver")
-	public String loginNaver(@RequestParam(required = false) String code, @RequestParam(required = false)String state) throws Exception {
-
-		String access_token = customOAuth2UserService.getNaverAccessToken(code, state);
-		customOAuth2UserService.saveNaver(access_token);
-		
-		return "redirect:/";
-	}
 	
 	@GetMapping("/findPassword")
 	public String findPw() throws Exception {
@@ -183,6 +182,8 @@ public class UserController {
 			session.removeAttribute("access_token");
 		} else if(userDTO.getAuthId().equals(AuthId.NAVER)) {
 			customOAuth2UserService.deleteNaver(session.getAttribute("access_token").toString(), id);
+		} else if(userDTO.getAuthId().equals(AuthId.GOOGLE)) {
+			customOAuth2UserService.deleteGoogle(session.getAttribute("access_token").toString(), id);
 		}
 		
 		SecurityContextHolder.clearContext();
