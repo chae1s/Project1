@@ -6,6 +6,9 @@ import java.io.InputStreamReader;
 import java.io.OutputStreamWriter;
 import java.net.HttpURLConnection;
 import java.net.URL;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.UUID;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
@@ -36,6 +39,42 @@ public class CustomOAuth2UserService {
 	private final HttpServletRequest request;
 	private final FileHandler fileHandelr;
 	
+	public String getNaverAccessToken(String code, String state) throws Exception {
+		String access_token = "";
+		String refresh_token = "";
+		String reqURL = "https://nid.naver.com/oauth2.0/token";
+		
+		URL url = new URL(reqURL);
+		HttpURLConnection conn = (HttpURLConnection) url.openConnection();
+		conn.setRequestMethod("GET");
+		conn.setDoOutput(true);
+		BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(conn.getOutputStream()));
+		StringBuilder sb = new StringBuilder();
+		
+		sb.append("grant_type=authorization_code");
+        sb.append("&client_id=jL9LamOAjHNUZjduawCh"); // TODO REST_API_KEY 입력
+        sb.append("&redirect_uri=http://localhost/users/login/oauth2/code/naver"); // TODO 인가코드 받은 redirect_uri 입력
+        sb.append("&client_secret=2vMPI2zP07");
+        sb.append("&code=" + code);
+        sb.append("&state=" + state);
+        bw.write(sb.toString());
+        bw.flush();
+        
+        int responseCode = conn.getResponseCode();
+        System.out.println("responseCode : " + responseCode);
+		
+        Map<String, String> token = token(conn, access_token, refresh_token);
+        access_token = token.get("access_token");
+        refresh_token = token.get("refresh_token");
+        
+        System.out.println("access_token : " + access_token);
+        System.out.println("refresh_token : " + refresh_token);
+
+        bw.close();
+        
+        return access_token;
+	}
+	
 	
 	public String getKakaoAccessToken (String code) throws Exception {
         String access_token = "";
@@ -65,29 +104,51 @@ public class CustomOAuth2UserService {
         System.out.println("responseCode : " + responseCode);
         
         //요청을 통해 얻은 JSON타입의 Response 메세지 읽어오기
-        BufferedReader br = new BufferedReader(new InputStreamReader(conn.getInputStream()));
-        String line = "";
-        String result = "";
+        Map<String, String> token = token(conn, access_token, refresh_token);
+        access_token = token.get("access_token");
+        refresh_token = token.get("refresh_token");
         
-        while ((line = br.readLine()) != null) {
-        	result += line;
-        }
-        System.out.println("response body : " + result);
-        
-        ObjectMapper objectMapper = new ObjectMapper();
-        JsonNode jsonNode = objectMapper.readTree(result);
-        access_token = jsonNode.get("access_token").asText();
-        refresh_token = jsonNode.get("refresh_token").asText();
-        
-        
-        System.out.println("access_token : " + access_token);
-        System.out.println("refresh_token : " + refresh_token);
-        
-        br.close();
         bw.close();
 
         return access_token;
     }
+	
+
+	
+	public void saveNaver(String access_token) throws Exception {
+		String reqURL = "https://openapi.naver.com/v1/nid/me";
+		
+		URL url = new URL(reqURL);
+		HttpURLConnection conn = (HttpURLConnection)url.openConnection();
+		
+		conn.setRequestMethod("GET");
+		conn.setDoOutput(true);
+		conn.setRequestProperty("Authorization", "Bearer " + access_token);
+		
+		BufferedReader br = new BufferedReader(new InputStreamReader(conn.getInputStream()));
+		String line = "";
+		String result = "";
+		while((line = br.readLine()) != null) {
+			result += line;
+		}
+		
+		ObjectMapper objectMapper = new ObjectMapper();
+		JsonNode jsonNode = objectMapper.readTree(result);
+		String email = jsonNode.get("response").get("email").asText();
+		String name = jsonNode.get("response").get("name").asText();
+		
+		UserSaveRequestDTO userDTO = UserSaveRequestDTO.builder()
+				.email(email)
+				.name(name)
+				.nickname(randomNickname())
+				.authId(AuthId.NAVER)
+				.build();
+		
+		User user = save(userDTO);
+		forceLogin(user, access_token);
+		
+		br.close();
+	}
 	
 	public void saveKakao(String access_token) throws Exception {
 		String reqURL = "https://kapi.kakao.com/v2/user/me";
@@ -98,9 +159,6 @@ public class CustomOAuth2UserService {
 		conn.setRequestMethod("POST");
 		conn.setDoOutput(true);
 		conn.setRequestProperty("Authorization", "Bearer " + access_token);
-		
-		int responseCode = conn.getResponseCode();
-		System.out.println("responseCode : " + responseCode );
 		
 		BufferedReader br = new BufferedReader(new InputStreamReader(conn.getInputStream()));
 		String line = "";
@@ -120,7 +178,7 @@ public class CustomOAuth2UserService {
 		
 		UserSaveRequestDTO userDTO = UserSaveRequestDTO.builder()
 				.email(email)
-				.nickname(nickname)
+				.nickname(randomNickname())
 				.name(nickname)
 				.authId(AuthId.KAKAO)
 				.build();
@@ -131,38 +189,13 @@ public class CustomOAuth2UserService {
 		br.close();
 	}
 	
-	public void logoutKakao(String access_token) throws Exception {
-		String reqURL = "https://kapi.kakao.com/v1/user/logout";
-		URL url = new URL(reqURL);
-		HttpURLConnection conn = (HttpURLConnection)url.openConnection();
-		
-		conn.setRequestMethod("POST");
-		conn.setRequestProperty("Authorization", "Bearer " + access_token);
-		
-		int responseCode = conn.getResponseCode();
-		System.out.println("responseCode : " + responseCode);
-		
-		BufferedReader br = new BufferedReader(new InputStreamReader(conn.getInputStream()));
-		
-		String result = "";
-		String line = "";
-		
-		while((line = br.readLine()) != null) {
-			result += line;
-		}
-		System.out.println(result);
-	}
-	
-	public void unlinkKakao(String access_token, Long id) throws Exception {
+	public void deleteKakao(String access_token, Long id) throws Exception {
 		String reqURL = "https://kapi.kakao.com/v1/user/unlink";
 		URL url = new URL(reqURL);
 		HttpURLConnection conn = (HttpURLConnection)url.openConnection();
 		
 		conn.setRequestMethod("POST");
 		conn.setRequestProperty("Authorization", "Bearer " + access_token);
-		
-		int responseCode = conn.getResponseCode();
-		System.out.println("responseCode : " + responseCode);
 		
 		BufferedReader br = new BufferedReader(new InputStreamReader(conn.getInputStream()));
 		
@@ -176,6 +209,54 @@ public class CustomOAuth2UserService {
 		if(!result.equals("")) {
 			delete(id);
 		}
+		
+		br.close();
+	}
+	
+	public void deleteNaver(String access_token, Long id) throws Exception {
+		String reqURL = "https://nid.naver.com/oauth2.0/token";
+		URL url = new URL(reqURL);
+		HttpURLConnection conn = (HttpURLConnection) url.openConnection();
+		
+		conn.setRequestMethod("GET");
+		conn.setDoOutput(true);
+		BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(conn.getOutputStream()));
+		StringBuilder sb = new StringBuilder();
+		
+		sb.append("grant_type=delete");
+        sb.append("&client_id=jL9LamOAjHNUZjduawCh");
+        sb.append("&client_secret=2vMPI2zP07");
+        sb.append("&access_token=" + access_token);
+        sb.append("&service_provider=NAVER");
+        bw.write(sb.toString());
+        bw.flush();
+        
+        int responseCode = conn.getResponseCode();
+        System.out.println("responseCode : " + responseCode);
+        if(responseCode == 200) {
+        	delete(id);
+        }
+	}
+	
+	private Map<String, String> token(HttpURLConnection conn, String access_token, String refresh_token) throws Exception {
+		BufferedReader br = new BufferedReader(new InputStreamReader(conn.getInputStream()));
+		String line = "";
+		String result = "";
+		Map<String, String> token = new HashMap<String, String>();
+		while ((line = br.readLine()) != null) {
+			result += line;
+		}
+		System.out.println("Response Body : " + result);
+		
+		ObjectMapper objectMapper = new ObjectMapper();
+		JsonNode jsonNode = objectMapper.readTree(result);
+        
+        token.put("access_token", jsonNode.get("access_token").asText());
+        token.put("refresh_token", jsonNode.get("refresh_token").asText());
+        
+        br.close();
+        
+        return token;
 	}
 	
 	private User save(UserSaveRequestDTO userDTO) {
@@ -204,6 +285,13 @@ public class CustomOAuth2UserService {
 		}
 		
 		userRepository.delete(user);
+	}
+	
+	private String randomNickname() {
+		int nicknameLength = 5;
+		String nickname = UUID.randomUUID().toString().substring(0, nicknameLength);
+		
+		return nickname;
 	}
 
 }

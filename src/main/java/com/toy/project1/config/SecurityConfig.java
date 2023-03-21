@@ -5,38 +5,24 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityCustomizer;
-import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
-import org.springframework.security.provisioning.InMemoryUserDetailsManager;
 import org.springframework.security.web.SecurityFilterChain;
 
 import com.toy.project1.service.MyUserDetailsService;
 
-import org.springframework.security.core.userdetails.User;
 
 
-import lombok.AllArgsConstructor;
+import lombok.RequiredArgsConstructor;
 
 @Configuration
 @EnableWebSecurity
-@AllArgsConstructor
+@RequiredArgsConstructor
 public class SecurityConfig {
 	
+	private final MyUserDetailsService myUserDetailsService;
 	
-	private final MyUserDetailsService userDetailsService;
-	
-	
-	@Bean
-	public InMemoryUserDetailsManager userDetailsService() {
-		UserDetails user = User.withUsername("admin@trip.com")
-				.password(encoder().encode("admin1230"))
-				.roles("ADMIN")
-				.build();
 		
-		return new InMemoryUserDetailsManager(user);
-	}
-	
 	@Bean
 	public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
 		http
@@ -46,7 +32,6 @@ public class SecurityConfig {
 			.authorizeRequests()
 									.antMatchers("/").permitAll()
 									.antMatchers("/users/login/**").anonymous()
-									.antMatchers("/oauth2/**").anonymous()
 									.antMatchers("/users/join").anonymous()
 									.antMatchers("/users/emailCheck").anonymous()
 									.antMatchers("/users/nicknameCheck").anonymous()
@@ -69,7 +54,7 @@ public class SecurityConfig {
 						.deleteCookies("JSESSIONID")
 						.permitAll()
 						.and()
-			.userDetailsService(userDetailsService)
+			.userDetailsService(myUserDetailsService)
 			.oauth2Login()
 			;
 									

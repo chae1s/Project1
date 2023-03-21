@@ -79,15 +79,16 @@ public class UserController {
 		
 		String access_token = customOAuth2UserService.getKakaoAccessToken(code);
 		customOAuth2UserService.saveKakao(access_token);
+		System.out.println(code);
 		
 		return "redirect:/";
 	}
 	
-	@GetMapping("/oauth2/logout")
-	public String logout(HttpSession session) throws Exception {
-		
-		customOAuth2UserService.logoutKakao(session.getAttribute("access_token").toString());
-		SecurityContextHolder.clearContext();
+	@GetMapping("/login/oauth2/code/naver")
+	public String loginNaver(@RequestParam(required = false) String code, @RequestParam(required = false)String state) throws Exception {
+
+		String access_token = customOAuth2UserService.getNaverAccessToken(code, state);
+		customOAuth2UserService.saveNaver(access_token);
 		
 		return "redirect:/";
 	}
@@ -178,8 +179,10 @@ public class UserController {
 		if(userDTO.getAuthId().equals(AuthId.EMAIL)) {
 			userService.delete(id);
 		} else if(userDTO.getAuthId().equals(AuthId.KAKAO)) {
-			customOAuth2UserService.unlinkKakao(session.getAttribute("access_token").toString(), id);
+			customOAuth2UserService.deleteKakao(session.getAttribute("access_token").toString(), id);
 			session.removeAttribute("access_token");
+		} else if(userDTO.getAuthId().equals(AuthId.NAVER)) {
+			customOAuth2UserService.deleteNaver(session.getAttribute("access_token").toString(), id);
 		}
 		
 		SecurityContextHolder.clearContext();

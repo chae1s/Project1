@@ -25,7 +25,6 @@ public class User {
 	private String email;
 	private String password;
 	private String name;
-	@Column(unique = true)
 	private String nickname;
 	private String profile_image;
 	@Enumerated(EnumType.STRING)

@@ -13,16 +13,9 @@
 						<a th:href="@{/users/login}" sec:authorize="isAnonymous()">
 							<span>로그인</span>
 						</a>
-						<div th:if="${#authentication.principal.authId.toString().equals('EMAIL')}" sec:authorize="isAuthenticated()">
-							<a th:href="@{/users/logout}" sec:authorize="isAuthenticated()">
-								<span>로그아웃</span>
-							</a>				
-						</div>	
-						<div th:if="!${#authentication.principal.authId.toString().equals('EMAIL')}" sec:authorize="isAuthenticated()">
-							<a th:href="@{/users/oauth2/logout}" >
-								<span>로그아웃</span>
-							</a>				
-						</div>				
+						<a th:href="@{/users/logout}" sec:authorize="isAuthenticated()">
+							<span>로그아웃</span>
+						</a>				
 						<a th:href="@{/users/join}" sec:authorize="isAnonymous()">
 							<span>회원가입</span>
 						</a>				
