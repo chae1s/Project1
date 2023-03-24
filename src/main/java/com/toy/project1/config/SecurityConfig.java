@@ -37,7 +37,7 @@ public class SecurityConfig {
 									.antMatchers("/users/nicknameCheck").anonymous()
 									.antMatchers("/users/findPassword").anonymous()
 									.antMatchers("/send-mail/*").anonymous()
-									.antMatchers("/users/**").authenticated()
+									.antMatchers("/users/**", "/diary/save").authenticated()
 									.and()
 			.formLogin()
 						.loginPage("/users/login")

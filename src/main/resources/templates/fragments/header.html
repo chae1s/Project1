@@ -19,7 +19,7 @@
 						<a th:href="@{/users/join}" sec:authorize="isAnonymous()">
 							<span>회원가입</span>
 						</a>				
-						<a th:href="@{/users/{id}(id=${#authentication.principal.id})}" sec:authorize="isAuthenticated()">
+						<a th:href="@{/users/{id}(id=${session.user.getId()})}" sec:authorize="isAuthenticated()">
 							<span>내정보</span>
 						</a>	
 						<a th:href="@{/users/login}">
@@ -32,7 +32,7 @@
 			    <div class="contents">
 				    <div class="nav_menu">
 				        <a th:href="@{/users/login}">여행장소</a>
-				        <a th:href="@{/users/login}">여행일기</a>
+				        <a th:href="@{/diary}">여행일기</a>
 				        <a th:href="@{/users/login}">여행일정</a>
 				        <a th:href="@{/users/login}">예약하기</a>
 				        <a th:href="@{/users/login}">이벤트</a>

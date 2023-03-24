@@ -50,6 +50,8 @@ input {
 	line-height: 1.2;
 	color: #2F3438;
 	font-weight: 400;
+	font: inherit;
+	font-family: "Noto Sans KR";
 }
 
 input:focus {

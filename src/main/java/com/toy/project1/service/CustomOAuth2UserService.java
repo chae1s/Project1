@@ -22,6 +22,7 @@ import org.springframework.stereotype.Service;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.toy.project1.domain.AuthId;
+import com.toy.project1.domain.SessionUser;
 import com.toy.project1.domain.User;
 import com.toy.project1.dto.UserSaveRequestDTO;
 import com.toy.project1.handler.FileHandler;
@@ -349,6 +350,7 @@ public class CustomOAuth2UserService {
 		HttpSession httpSession = request.getSession(true);
 		httpSession.setAttribute(HttpSessionSecurityContextRepository.SPRING_SECURITY_CONTEXT_KEY, securityContext);
 		
+		httpSession.setAttribute("user", new SessionUser(user));
 		httpSession.setAttribute("access_token", access_token);
 	}
 	

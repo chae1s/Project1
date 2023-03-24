@@ -16,9 +16,9 @@
 					<div class="edit_lists">
 						<h3>내 정보</h3>
 						<div>
-							<a th:href="@{/users/edit/{id}(id=${#authentication.principal.id})}">회원정보 수정</a>
-							<a th:href="@{/users/edit/password/{id}(id=${#authentication.principal.id})}">비밀번호 변경</a>
-							<a th:href="@{/users/delete/{id}(id=${#authentication.principal.id})}" style="font-weight: 500">회원 탈퇴</a>
+							<a th:href="@{/users/edit/{id}(id=${session.user.getId()})}">회원정보 수정</a>
+							<a th:href="@{/users/edit/password/{id}(id=${session.user.getId()})}">비밀번호 변경</a>
+							<a th:href="@{/users/delete/{id}(id=${session.user.getId()})}" style="font-weight: 500">회원 탈퇴</a>
 						</div>
 					</div>
 					<div class="edit_input_area">

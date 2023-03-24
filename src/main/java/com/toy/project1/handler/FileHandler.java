@@ -32,6 +32,7 @@ public class FileHandler {
 		return fileName;
 	}
 	
+	
 	public boolean fileDelete(String filePath, String fileName) throws Exception {
 		ClassPathResource classPathResource = new ClassPathResource("static");
 		

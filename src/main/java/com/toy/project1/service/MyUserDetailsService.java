@@ -2,13 +2,15 @@ package com.toy.project1.service;
 
 import java.util.Optional;
 
-import org.springframework.beans.factory.annotation.Autowired;
+import javax.servlet.http.HttpSession;
+
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
 import com.toy.project1.domain.MyUserPrincipal;
+import com.toy.project1.domain.SessionUser;
 import com.toy.project1.domain.User;
 import com.toy.project1.repository.UserRepository;
 
@@ -18,8 +20,10 @@ import lombok.RequiredArgsConstructor;
 @RequiredArgsConstructor
 public class MyUserDetailsService implements UserDetailsService {
 	
-	@Autowired
-	private UserRepository userRepository;
+	
+	private final UserRepository userRepository;
+	private final HttpSession session;
+	
 	
 	@Override
 	public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
@@ -28,6 +32,8 @@ public class MyUserDetailsService implements UserDetailsService {
 		if(!user.isPresent()) {
 			throw new UsernameNotFoundException("존재하지 않는 사용자입니다.");
 		}
+		
+		session.setAttribute("user", new SessionUser(user.get()));
 		
 		return new MyUserPrincipal(user.get());
 	}

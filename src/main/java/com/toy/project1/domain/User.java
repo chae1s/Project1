@@ -1,5 +1,8 @@
 package com.toy.project1.domain;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
@@ -7,15 +10,14 @@ import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.Lob;
+import javax.persistence.OneToMany;
 
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-import lombok.ToString;
 
 @Entity
 @Getter
-@ToString
 @NoArgsConstructor
 public class User {
 	
@@ -35,6 +37,9 @@ public class User {
 	@Enumerated(EnumType.STRING)
 	@Column(nullable = false)
 	private Role role;
+	@OneToMany(mappedBy = "user")
+	private List<Diary> diaries = new ArrayList<Diary>();
+	
 	
 	@Builder
 	public User(Long id, String email, String password, String name, String nickname, String profile_image, AuthId authId,String introduce, boolean enabled, Role role) {
@@ -48,10 +53,6 @@ public class User {
 		this.introduce = introduce;
 		this.enabled = enabled;
 		this.role = role;
-	}
-	
-	public void update(Long id) {
-		this.id = id;
 	}
 	
 	public void update(String nickname, String profile_image, String introduce) {

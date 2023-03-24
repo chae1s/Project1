@@ -17,7 +17,9 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.toy.project1.auth.LoginUser;
 import com.toy.project1.domain.AuthId;
+import com.toy.project1.domain.SessionUser;
 import com.toy.project1.dto.UserResponseDTO;
 import com.toy.project1.dto.UserSaveRequestDTO;
 import com.toy.project1.dto.UserUpdateRequestDTO;
@@ -109,10 +111,10 @@ public class UserController {
 	}
 	
 	@GetMapping("/edit/{id}")
-	public ModelAndView edit(@PathVariable Long id, Principal principal) throws Exception {
+	public ModelAndView edit(@PathVariable Long id, @LoginUser SessionUser user) throws Exception {
 		ModelAndView mv = new ModelAndView();
 		UserResponseDTO userDTO = userService.findById(id);
-		if(!principal.getName().contains(userDTO.getEmail())) {
+		if(user.getId() != id) {
 			throw new IllegalArgumentException("이 페이지 이용 불가");
 		}
 		mv.addObject("userDTO", userDTO);
@@ -153,8 +155,10 @@ public class UserController {
 	}
 	
 	@GetMapping("/edit/password/{id}")
-	public String changePw(@PathVariable Long id) {
-		
+	public String changePw(@PathVariable Long id, @LoginUser SessionUser user) {
+		if(user.getId() != id) {
+			throw new IllegalArgumentException("이 페이지 이용 불가");
+		}
 		return "user/passwordChange";
 	}
 	
@@ -167,7 +171,11 @@ public class UserController {
 	}
 	
 	@GetMapping("/delete/{id}")
-	public String delete() throws Exception {
+	public String delete(@PathVariable Long id, @LoginUser SessionUser user) throws Exception {
+		
+		if(user.getId() != id) {
+			throw new IllegalArgumentException("이 페이지 이용 불가");
+		}
 		
 		return "user/delete";
 	}
@@ -187,7 +195,7 @@ public class UserController {
 		}
 		
 		SecurityContextHolder.clearContext();
-		
+		session.removeAttribute("user");
 		return "redirect:/";
 	}
 	
