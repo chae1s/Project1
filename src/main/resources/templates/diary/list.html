@@ -18,7 +18,7 @@
 						 	<a href="#">더보기</a>
 						</div>
 						<div class="pop_diary_list">
-							<div class="pop_diary" th:onclick="'location.href=\''+ @{/} + '\''" th:each="pop : ${popDiaryDTO}">
+							<div class="pop_diary" th:onclick="'location.href=\''+ @{/diary/{id}(id=${pop.id})} + '\''" th:each="pop : ${popDiaryDTO}">
 								<img class="pop_diary_img" th:src="@{/images/upload/diary/} + ${pop.diaryFiles.get(0).fileName}" th:if="${not #lists.isEmpty(pop.diaryFiles)}"/>
 								<img class="pop_diary_img" th:src="@{/images/no_img.png}" th:if="${#lists.isEmpty(pop.diaryFiles)}"/>
 								<div class="pop_diary_area">
@@ -59,7 +59,7 @@
 						 	<a href="#">더보기</a>
 						</div>
 						<div class="diary_list">
-							<div class="diary" th:onclick="'location.href=\''+ @{/} + '\''" th:each="newDiary : ${newDiaryDTO}">
+							<div class="diary" th:onclick="'location.href=\''+ @{/diary/{id}(id=${newDiary.id})} + '\''" th:each="newDiary : ${newDiaryDTO}">
 								<div class="diary_area">
 									<div class="diary_text">
 										<div class="diary_tdch">

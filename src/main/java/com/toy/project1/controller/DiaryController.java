@@ -30,7 +30,7 @@ public class DiaryController {
 	private final DiaryService diaryService;
 	
 	@GetMapping("")
-	public ModelAndView list(@RequestParam(value = "page", defaultValue = "0") int page) throws Exception {
+	public ModelAndView list(@RequestParam(value = "page", defaultValue = "1") int page) throws Exception {
 		ModelAndView mv = new ModelAndView();
 		List<DiaryResponseDTO> popularDiaryDTO = diaryService.popularDiaryList();
 		Page<DiaryResponseDTO> newDiaryDTO = diaryService.newDiaryList(page-1);
