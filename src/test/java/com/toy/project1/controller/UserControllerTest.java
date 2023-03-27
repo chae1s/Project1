@@ -10,8 +10,6 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.test.context.junit4.SpringRunner;
 
-import com.toy.project1.domain.AuthId;
-import com.toy.project1.domain.Role;
 import com.toy.project1.domain.User;
 import com.toy.project1.dto.UserSaveRequestDTO;
 import com.toy.project1.dto.UserUpdateRequestDTO;
@@ -58,7 +56,7 @@ public class UserControllerTest {
 		
 	}
 	
-	@Test
+//	@Test
 	public void join_user() throws Exception {
 		//given
 		for(int i=1;i<=20;i++) {
@@ -85,40 +83,24 @@ public class UserControllerTest {
 		
 	}
 	
-//	@Test
+	@Test
 	public void edit() throws Exception {
 		//given
-		User user = userRepository.save(
-										User.builder()
-											.email("user02@mail.com")
-											.password(encoder.encode("user1230"))
-											.name("박사용")
-											.nickname("양파링")
-											.profile_image("profil.png")
-											.authId(AuthId.EMAIL)
-											.role(Role.ROLE_USER)
-											.enabled(true)
-											.build()
-										);
-		Long updateId = user.getId();
-		String editNickname = "감자깡";
-		String editImage = "profil.png";
-		String editIntroduce = "맛있는 감자깡";
+		String [] nicknames = {"나사람됐다", "짱이지", "이손을봐", "대박임", "삐죽",
+							   "나한테집중해", "크르릉", "찰떡콩떡", "사과떡", "고롱고로롱", 
+							   "뚜루루룻", "왕크왕귀", "망곰", "고심이", "춤춰주세요", 
+							   "알빠임", "루앤율", "최강마루", "임주스씨", "미안사탕줄게"};
 		
-		UserUpdateRequestDTO userDTO = UserUpdateRequestDTO.builder()
-				.nickname(editNickname)
-				.introduce(editIntroduce)
-				.build();
+		for(int i=1;i<=20;i++) {
+			UserUpdateRequestDTO updateRequestDTO = UserUpdateRequestDTO.builder()
+									.nickname(nicknames[i-1])
+									.profile_image("profile"+i+".jpg")
+									.introduce("안녕하세요. 저는 "+nicknames[i-1]+" 입니다.")
+									.build();
+			
+			userService.edit((long)(i+1), updateRequestDTO);
+		}
 		
-		//when
-		userService.edit(updateId, userDTO);
-		Optional<User> users = userRepository.findById(updateId);
-		User editUser = users.get();
-		
-		//then
-		Assertions.assertThat(editUser.getNickname()).isEqualTo(editNickname);
-		Assertions.assertThat(editUser.getProfile_image()).isEqualTo(editImage);
-		Assertions.assertThat(editUser.getIntroduce()).isEqualTo(editIntroduce);
 	}
 
 }

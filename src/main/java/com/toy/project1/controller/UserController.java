@@ -140,16 +140,16 @@ public class UserController {
 	
 	@PutMapping("/edit/file/{id}")
 	@ResponseBody
-	public String editFile(@PathVariable Long id, UserUpdateRequestDTO userDTO, MultipartFile file) throws Exception {
-		String fileName = userService.editFile(id, userDTO, file);
+	public String editFile(@PathVariable Long id, MultipartFile file) throws Exception {
+		String fileName = userService.editFile(id, file);
 		
 		return fileName;
 	}
 	
 	@PutMapping("/edit/deleteFile/{id}")
 	@ResponseBody
-	public boolean deleteFile(@PathVariable Long id, UserUpdateRequestDTO userDTO) throws Exception {
-		boolean result = userService.deleteFile(id, userDTO);
+	public boolean deleteFile(@PathVariable Long id) throws Exception {
+		boolean result = userService.deleteFile(id);
 		
 		return result;
 	}

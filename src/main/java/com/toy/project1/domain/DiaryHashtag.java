@@ -16,23 +16,26 @@ import lombok.ToString;
 @Getter
 @ToString
 @NoArgsConstructor
-public class DiaryFiles {
+public class DiaryHashtag {
 	
 	@Id @GeneratedValue
 	private Long id;
-	@ToString.Exclude
+	
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "DIARY_ID")
 	private Diary diary;
-	private String fileName;
-	private String oriName;
+	
+	@ManyToOne(fetch = FetchType.LAZY)
+	@JoinColumn(name = "HASHTAG_ID")
+	private Hashtag hashtag;
 	
 	@Builder
-	public DiaryFiles(Diary diary, String fileName, String oriName) {
+	public DiaryHashtag(Long id, Diary diary, Hashtag hashtag) {
+		this.id = id;
 		this.diary = diary;
-		this.fileName = fileName;
-		this.oriName = oriName;
+		this.hashtag = hashtag;
 	}
-	
 
 }
+
+

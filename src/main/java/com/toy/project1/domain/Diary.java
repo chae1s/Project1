@@ -3,6 +3,7 @@ package com.toy.project1.domain;
 import java.util.ArrayList;
 import java.util.List;
 
+
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
@@ -15,9 +16,11 @@ import javax.persistence.OneToMany;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.ToString;
 
 @Entity
 @Getter
+@ToString
 @NoArgsConstructor
 public class Diary extends BaseTimeEntity {
 	
@@ -26,12 +29,19 @@ public class Diary extends BaseTimeEntity {
 	private String title;
 	@Lob
 	private String contents;
+	@ToString.Exclude
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "USER_ID")
 	private User user;
 	private Integer hits;
+	@ToString.Exclude
 	@OneToMany(mappedBy = "diary")
-	private List<DiaryFiles> diaryFiles = new ArrayList<DiaryFiles>();
+	private List<DiaryFiles> diaryFiles = new ArrayList<>();
+	@ToString.Exclude
+	@OneToMany(mappedBy = "diary")
+	private List<DiaryHashtag> hashtags = new ArrayList<>();
+	
+	
 	
 	@Builder
 	public Diary(Long id, String title, String contents, User user, Integer hits) {
@@ -46,9 +56,4 @@ public class Diary extends BaseTimeEntity {
 		this.diaryFiles.add(file);
 	}
 	
-	public void contentsTagRemove(String contents) {
-		String htmlReg = "<(/)?([a-zA-Z]*)(\\s[a-zA-Z]*=[^>]*)?(\\s)*(/)?>";
-		this.contents = contents.replaceAll(htmlReg, "");
-	}
-
 }

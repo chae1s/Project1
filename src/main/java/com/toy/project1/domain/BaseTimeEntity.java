@@ -5,6 +5,8 @@ import java.time.format.DateTimeFormatter;
 
 import javax.persistence.EntityListeners;
 import javax.persistence.MappedSuperclass;
+import javax.persistence.PrePersist;
+import javax.persistence.PreUpdate;
 
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedDate;
@@ -18,8 +20,19 @@ import lombok.Getter;
 public class BaseTimeEntity {
 	
 	@CreatedDate
-	private String createdDate = LocalDate.now().format(DateTimeFormatter.ofPattern("yyyy.MM.dd"));
+	private String createdDate;
 	@LastModifiedDate
-	private String modifiedDate = LocalDate.now().format(DateTimeFormatter.ofPattern("yyyy.MM.dd"));
+	private String modifiedDate;
+	
+	@PrePersist
+	public void onPrePersist() {
+		this.createdDate = LocalDate.now().format(DateTimeFormatter.ofPattern("yyyy.MM.dd"));
+		this.modifiedDate = this.createdDate;
+	}
+	
+	@PreUpdate
+	public void preUpdate() {
+		this.modifiedDate = LocalDate.now().format(DateTimeFormatter.ofPattern("yyyy.MM.dd"));
+	}
 
 }

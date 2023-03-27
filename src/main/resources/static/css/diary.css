@@ -25,6 +25,15 @@
 	font-size: 15px;
 }
 
+.diary_edit_contents .editor_hashtag {
+	height: 15px;
+	width: 842px;
+	margin: 0 0 12px;
+	padding: 11px 12px 10px;
+	border: 1px solid #dddddd;
+	font-size: 15px;
+}
+
 .diary_edit_contents .editor_title:focus {
 	outline: none;
 }
@@ -124,6 +133,10 @@
 	font-size: 16px;
 	font-weight: 500;
 	margin-top: 5px;
+	max-width: 254px;
+	overflow:hidden;
+	text-overflow:ellipsis;
+	white-space:nowrap;
 }
 
 .diary_info_dch {
@@ -230,7 +243,7 @@
 }
 
 .new_diary_section .diary_list .diary .diary_area{
-	padding: 4px 0px 7px 12px;
+	padding: 4px 0px 7px 3px;
 	display: flex;
 	flex-direction: column;
 	justify-content: space-between;
@@ -246,9 +259,19 @@
 	margin: 0;
 }
 
+.diary .diary_area .diary_text .diary_info_title {
+	font-size: 16px;
+	font-weight: 500;
+}
+
 .diary .diary_area .diary_text h3 {
 	font-size: 16px;
 	font-weight: 500;
+	max-width: 250px;
+	overflow:hidden;
+	text-overflow:ellipsis;
+	white-space:nowrap;
+	height: 26px;
 }
 
 .diary .diary_area .diary_tdch {
@@ -265,9 +288,46 @@
 	font-size: 12px;
 	width: 500px;
 	overflow: hidden;
+	text-overflow:ellipsis;
+	white-space:nowrap;
 }
 
 .diary .diary_area .diary_hashtag span {
 	margin-right: 4px;
 }
 
+.page {
+	text-align: center;
+	width: 50%;
+	margin: 0 auto;
+}
+
+.page .pagination {
+	list-style: none;
+	display: inline-block;
+	padding: 0;
+	margin-top: 20px;
+}
+
+.page .pagination li {
+	display: inline;
+	text-align: center;
+}
+
+.page .pagination a {
+	float: left;
+	display: block;
+	font-size: 14px;
+	text-decoration: none;
+	padding: 5px 12px;
+	line-height: 1.5;
+}
+
+.page .pagination .disabled {
+	display: none;
+}
+
+.page .pagination .active {
+	color: #7286D3;
+	font-weight: 600;
+}

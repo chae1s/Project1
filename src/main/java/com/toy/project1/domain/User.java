@@ -15,9 +15,11 @@ import javax.persistence.OneToMany;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.ToString;
 
 @Entity
 @Getter
+@ToString
 @NoArgsConstructor
 public class User {
 	
@@ -37,8 +39,9 @@ public class User {
 	@Enumerated(EnumType.STRING)
 	@Column(nullable = false)
 	private Role role;
+	@ToString.Exclude
 	@OneToMany(mappedBy = "user")
-	private List<Diary> diaries = new ArrayList<Diary>();
+	private List<Diary> diaries = new ArrayList<>();
 	
 	
 	@Builder

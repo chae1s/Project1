@@ -46,7 +46,7 @@ public class UserService {
 	}
 	
 	@Transactional
-	public String editFile(Long id, UserUpdateRequestDTO userDTO, MultipartFile file) throws Exception {
+	public String editFile(Long id, MultipartFile file) throws Exception {
 		User user = userRepository.findById(id).orElseThrow(() -> new IllegalArgumentException("존재하지 않는 계정입니다."));
 		
 		String fileName = user.getProfile_image();
@@ -59,7 +59,7 @@ public class UserService {
 	}
 	
 	@Transactional
-	public boolean deleteFile(Long id, UserUpdateRequestDTO userDTO) throws Exception {
+	public boolean deleteFile(Long id) throws Exception {
 		User user = userRepository.findById(id).orElseThrow(() -> new IllegalArgumentException("존재하지 않는 계정입니다."));
 		boolean result = fileHandelr.fileDelete("images/upload/user", user.getProfile_image());
 		

@@ -12,13 +12,13 @@ public class UserUpdateRequestDTO {
 	
 	private String password;
 	private String nickname;
-	private String fileName;
+	private String profile_image;
 	private String introduce;
 	
 	@Builder
-	public UserUpdateRequestDTO(String nickname, String fileName, String introduce) {
+	public UserUpdateRequestDTO(String nickname, String profile_image, String introduce) {
 		this.nickname = nickname;
-		this.fileName = fileName;
+		this.profile_image = profile_image;
 		this.introduce = introduce;
 	}
 	

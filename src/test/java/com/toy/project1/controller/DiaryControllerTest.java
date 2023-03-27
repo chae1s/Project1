@@ -3,6 +3,7 @@ package com.toy.project1.controller;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Random;
 
 import javax.servlet.http.HttpSession;
 
@@ -18,6 +19,7 @@ import com.toy.project1.domain.Diary;
 import com.toy.project1.domain.SessionUser;
 import com.toy.project1.domain.User;
 import com.toy.project1.dto.DiarySaveRequestDTO;
+import com.toy.project1.dto.HashtagSaveRequestDTO;
 import com.toy.project1.repository.DiaryRepository;
 import com.toy.project1.repository.UserRepository;
 import com.toy.project1.service.DiaryService;
@@ -48,12 +50,15 @@ public class DiaryControllerTest {
 		List<MultipartFile> files = new ArrayList<MultipartFile>();
 		DiarySaveRequestDTO diaryDTO = DiarySaveRequestDTO.builder()
 				.user(user)
-				.title("안녕하세요")
-				.contents("여행일기 입니다.")
+				.title("테스트여행일기 입니다.")
+				.contents("여행일기 입니다. 저는 관리자입니다.")
+				.build();
+		HashtagSaveRequestDTO hashtagDTO = HashtagSaveRequestDTO.builder()
+				.hashtag("#안녕#히히")
 				.build();
 		
 		//when
-		diaryService.save(files, diaryDTO, sessionUser);
+		diaryService.save(files, diaryDTO, sessionUser, hashtagDTO);
 		List<Diary> diaries = diaryRepository.findByUserId(user.getId());
 		for(Diary diary : diaries) {
 			System.out.println(diary.getTitle());

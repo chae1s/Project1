@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+	<head>
+		<meta charset="UTF-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1">
+		<title>Insert title here</title>
+		<link rel="stylesheet" th:href="@{/css/diary.css}">
+		<th:block th:replace="fragments/config :: configFragment"></th:block>
+	</head>
+	<body>
+		<div id="trip_wrap">
+			<div class="frame">
+				<div th:replace="fragments/header :: menu"></div>
+				<div class="trip-frame">
+					<div>상세 페이지</div>
+					<footer style="height: 400px;">
+					
+					</footer>
+				</div>
+			</div>
+		</div>
+	</body>
+</html>

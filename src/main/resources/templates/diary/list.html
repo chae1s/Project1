@@ -7,104 +7,119 @@
 		<link rel="stylesheet" th:href="@{/css/diary.css}">
 		<th:block th:replace="fragments/config :: configFragment"></th:block>
 	</head>
-<body>
-	<div id="trip_wrap">
-		<div class="frame">
-			<div th:replace="fragments/header :: menu"></div>
-			<div class="trip-frame">
-				<section class="pop_diary_section diary_section">
-					<div class="diary_title">
-					 	<h3>인기 게시글</h3>
-					 	<a href="#">더보기</a>
-					</div>
-					<div class="pop_diary_list">
-						<div class="pop_diary" th:onclick="'location.href=\''+ @{/} + '\''" th:each="pop : ${popDiaryDTO}">
-							<img class="pop_diary_img" th:src="@{/images/upload/diary/} + ${pop.diaryFiles.get(0).fileName}" />
-							<div class="pop_diary_area">
-								<div class="pop_diary_text">
-									<h3 th:text="${pop.title}"></h3>
-									<div class="diary_info_dch">
-										<span class="info_date" th:text="${pop.createdDate}"></span>
-										<span class="diary_c">
-											<span class="info_comment">댓글 </span>
-											<span class="comment_num">200</span>
-										</span>
-										<span class="diary_h">
-											<span class="info_hits">조회수 </span>
-											<span class="hits_num">150</span>
-										</span>
-									</div>
-									<div class="pop_diary_contents diary_contents" th:utext="${pop.contents}"></div>
-								</div>
-								<div class="diary_info_nl pop_diary_nl">
-									<div class="diary_nickname">
-										<div class="img_area">
-											<img alt="" th:src="@{/images/upload/user/} + ${pop.user.profile_image}">
-										</div>
-										<div class="nickname" th:text="${pop.user.nickname}"></div>
-									</div>
-									<div class="diary_like">
-										<img alt="" th:src="@{/icons/like.png}">
-										<span class="frame-text033">180</span>
-									</div>
-								</div>
-							</div>
+	<body>
+		<div id="trip_wrap">
+			<div class="frame">
+				<div th:replace="fragments/header :: menu"></div>
+				<div class="trip-frame">
+					<section class="pop_diary_section diary_section">
+						<div class="diary_title">
+						 	<h3>인기 게시글</h3>
+						 	<a href="#">더보기</a>
 						</div>
-					</div>
-				</section>
-				<section class="diary_section new_diary_section">
-					<div class="diary_title">
-					 	<h3>최근 게시글</h3>
-					 	<a href="#">더보기</a>
-					</div>
-					<div class="diary_list">
-						<div class="diary" th:onclick="'location.href=\''+ @{/} + '\''" th:each="newDiary : ${newDiaryDTO}">
-							<div class="diary_area">
-								<div class="diary_text">
-									<div class="diary_tdch">
-										<h3 th:text="${newDiary.title}"></h3>
+						<div class="pop_diary_list">
+							<div class="pop_diary" th:onclick="'location.href=\''+ @{/} + '\''" th:each="pop : ${popDiaryDTO}">
+								<img class="pop_diary_img" th:src="@{/images/upload/diary/} + ${pop.diaryFiles.get(0).fileName}" th:if="${not #lists.isEmpty(pop.diaryFiles)}"/>
+								<img class="pop_diary_img" th:src="@{/images/no_img.png}" th:if="${#lists.isEmpty(pop.diaryFiles)}"/>
+								<div class="pop_diary_area">
+									<div class="pop_diary_text">
+										<h3 th:text="${pop.title}"></h3>
 										<div class="diary_info_dch">
-											<span class="info_date" th:text="${newDiary.createdDate}"></span>
+											<span class="info_date" th:text="${pop.createdDate}"></span>
 											<span class="diary_c">
 												<span class="info_comment">댓글 </span>
 												<span class="comment_num">200</span>
 											</span>
 											<span class="diary_h">
 												<span class="info_hits">조회수 </span>
-												<span class="hits_num">150</span>
+												<span class="hits_num" th:text="${pop.hits}"></span>
 											</span>
 										</div>
+										<div class="pop_diary_contents diary_contents" th:utext="${pop.contents}"></div>
 									</div>
-									<div class="diary_contents new_diary_contents" th:utext="${newDiary.contents}"></div>
-								</div>
-								<div class="diary_info_nl new_diary_nl">
-									<div class="diary_nickname">
-										<div class="img_area">
-											<img alt="" th:src="@{/images/upload/user/} + ${newDiary.user.profile_image}">
+									<div class="diary_info_nl pop_diary_nl">
+										<div class="diary_nickname">
+											<div class="img_area">
+												<img alt="" th:src="@{/images/upload/user/} + ${pop.user.profile_image}">
+											</div>
+											<div class="nickname" th:text="${pop.user.nickname}"></div>
 										</div>
-										<div class="nickname" th:text="${newDiary.user.nickname}"></div>
+										<div class="diary_like">
+											<img alt="" th:src="@{/icons/like.png}">
+											<span class="frame-text033">180</span>
+										</div>
 									</div>
-									<div class="diary_like">
-										<img alt="" th:src="@{/icons/like.png}">
-										<span class="frame-text033">180</span>
-									</div>
-								</div>
-								<div class="diary_hashtag">
-									<span>#맛집인정</span>
-									<span>#맛집인정</span>
-									<span>#맛집인정</span>
-									<span>#맛집인정</span>
 								</div>
 							</div>
-							<img class="diary_img" th:src="@{/images/upload/diary/} + ${newDiary.diaryFiles.get(0).fileName}" />
 						</div>
-					</div>
-				</section>
-				<footer style="height: 400px;">
-				
-				</footer>
+					</section>
+					<section class="diary_section new_diary_section">
+						<div class="diary_title">
+						 	<h3>최근 게시글</h3>
+						 	<a href="#">더보기</a>
+						</div>
+						<div class="diary_list">
+							<div class="diary" th:onclick="'location.href=\''+ @{/} + '\''" th:each="newDiary : ${newDiaryDTO}">
+								<div class="diary_area">
+									<div class="diary_text">
+										<div class="diary_tdch">
+											<h3 th:text="${newDiary.title}"></h3>
+											<div class="diary_info_dch">
+												<span class="info_date" th:text="${newDiary.createdDate}"></span>
+												<span class="diary_c">
+													<span class="info_comment">댓글 </span>
+													<span class="comment_num">200</span>
+												</span>
+												<span class="diary_h">
+													<span class="info_hits">조회수 </span>
+													<span class="hits_num" th:text="${newDiary.hits}"></span>
+												</span>
+											</div>
+										</div>
+										<div class="diary_contents new_diary_contents" th:utext="${newDiary.contents}"></div>
+									</div>
+									<div class="diary_info_nl new_diary_nl">
+										<div class="diary_nickname">
+											<div class="img_area">
+												<img alt="" th:src="@{/images/upload/user/} + ${newDiary.user.profile_image}">
+											</div>
+											<div class="nickname" th:text="${newDiary.user.nickname}"></div>
+										</div>
+										<div class="diary_like">
+											<img alt="" th:src="@{/icons/like.png}">
+											<span class="frame-text033">180</span>
+										</div>
+									</div>
+									<div class="diary_hashtag" th:if="${not #lists.isEmpty(newDiary.hashtags)}" >
+										<span th:each="hashtags : ${newDiary.hashtags}" th:text="'#' + ${hashtags.hashtag.hashtag}"></span>
+									</div>
+								</div>
+								<img class="diary_img" th:src="@{/images/upload/diary/} + ${newDiary.diaryFiles.get(0).fileName}" th:if="${not #lists.isEmpty(newDiary.diaryFiles)}"/>
+							</div>
+						</div>
+						<div th:if = "${!newDiaryDTO.isEmpty()}" class="page">
+							<ul class="pagination" th:with="start=${newDiaryDTO.number/5*5 + 1}, last=(${start + 4 < newDiaryDTO.totalPages ? start + 4 : newDiaryDTO.totalPages})">
+								<li th:classappend = "${!newDiaryDTO.hasPrevious} ? 'disabled'">
+									<a th:href="@{|?page=${newDiaryDTO.number}|}" class="prev">
+					                    <span>이전</span>
+					                </a>
+								</li>
+								<li th:each="page: ${#numbers.sequence(start, last)}">
+									<a th:text="${page}" class="num" th:href="@{|?page=${page}|}" th:classappend="${page == newDiaryDTO.number+1} ? 'active'"></a>
+								</li>
+								<li th:classappend="${!newDiaryDTO.hasNext} ? 'disabled'">
+					                <a class="next" th:href="@{|?page=${newDiaryDTO.number+2}|}">
+					                    <span>다음</span>
+					                </a>
+					            </li>
+							</ul>
+						</div>
+					</section>
+					<footer style="height: 400px;">
+					
+					</footer>
+				</div>
 			</div>
 		</div>
-	</div>
-</body>
+	</body>
 </html>
