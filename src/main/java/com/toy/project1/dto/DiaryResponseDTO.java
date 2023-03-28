@@ -23,7 +23,7 @@ public class DiaryResponseDTO {
 	private List<DiaryHashtag> hashtags = new ArrayList<>();
 	
 	
-	public DiaryResponseDTO(Diary diary) {
+	public DiaryResponseDTO(Diary diary, List<DiaryHashtag> hashtags) {
 		this.id = diary.getId();
 		this.title = diary.getTitle();
 		this.user = diary.getUser();
@@ -31,7 +31,7 @@ public class DiaryResponseDTO {
 		this.createdDate =	diary.getCreatedDate();
 		this.hits = diary.getHits();
 		this.diaryFiles = diary.getDiaryFiles();
-		this.hashtags = diary.getHashtags();
+		this.hashtags = hashtags;
 	}
 	
 	public DiaryResponseDTO(Diary diary, String regTag) {

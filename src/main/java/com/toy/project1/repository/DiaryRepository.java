@@ -1,6 +1,7 @@
 package com.toy.project1.repository;
 
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.data.domain.Sort;
 import org.springframework.data.jpa.repository.EntityGraph;
@@ -19,4 +20,7 @@ public interface DiaryRepository extends JpaRepository<Diary, Long>{
 	
 	@EntityGraph(attributePaths = {"user", "diaryFiles"})
 	List<Diary> findAll(Sort sort);
+	
+	@EntityGraph(attributePaths = {"user", "diaryFiles"})
+	Optional<Diary> findById(Long id);
 }

@@ -118,5 +118,28 @@ public class DiaryService {
 		
 		return diaryPage;
 	}
+	
+	public DiaryResponseDTO openDiary(Long id) {
+		Diary diary = diaryRepository.findById(id).orElseThrow(() -> new IllegalArgumentException("존재하지 않는 게시글입니다."));
+		List<DiaryHashtag> diaryHashtags = diaryHashtagRepository.findByDiaryId(id);
+		DiaryResponseDTO diaryResponseDTO = new DiaryResponseDTO(diary, diaryHashtags);
+		
+		return diaryResponseDTO;
+	}
+	
+	public void deleteDiary(Long id) throws Exception {
+		Diary diary = diaryRepository.findById(id).orElseThrow(() -> new IllegalArgumentException("존재하지 않는 게시글입니다."));
+		List<DiaryHashtag> diaryHashtags = diaryHashtagRepository.findByDiaryId(id);
+		List<DiaryFiles> diaryFiles = diaryFilesRepository.findByDiaryId(id);
+		for(DiaryHashtag diaryHashtag : diaryHashtags) {
+			diaryHashtagRepository.delete(diaryHashtag);
+		}
+		for(DiaryFiles file : diaryFiles) {
+			fileHandler.fileDelete("images/upload/diary", file.getFileName());
+			diaryFilesRepository.delete(file);
+		}
+		
+		diaryRepository.delete(diary);
+	}
 
 }

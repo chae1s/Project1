@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -57,9 +58,18 @@ public class DiaryController {
 	}
 	
 	@GetMapping("/{id}")
-	public String openDiary(@PathVariable Long id) {
+	public String openDiary(@PathVariable Long id, Model model) {
+		DiaryResponseDTO diaryDTO = diaryService.openDiary(id);
+		model.addAttribute("diary", diaryDTO);
 		
 		return "diary/open";
+	}
+	
+	@GetMapping("/delete/{id}")
+	public String deleteDiary(@PathVariable Long id) throws Exception {
+		diaryService.deleteDiary(id);
+		
+		return "redirect:/diary";
 	}
 
 }

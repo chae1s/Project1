@@ -12,7 +12,20 @@
 			<div class="frame">
 				<div th:replace="fragments/header :: menu"></div>
 				<div class="trip-frame">
-					<div>상세 페이지</div>
+					<section>
+						<div th:text="${diary.title}"></div>
+						<div th:text="${diary.user.nickname}"></div>
+						<div class="img_area">
+							<img alt="" th:src="@{/images/upload/user/} + ${diary.user.profile_image}">
+						</div>
+						<div th:utext="${diary.contents}"></div>
+						<div class="diary_hashtag" th:if="${not #lists.isEmpty(diary.hashtags)}" >
+							<span th:each="hashtags : ${diary.hashtags}" th:text="'#' + ${hashtags.hashtag.hashtag}"></span>
+						</div>
+					</section>
+					<div>
+						<a th:href="@{/diary/delete/}+${diary.id}" sec:authorize="isAuthenticated()" th:if="${session.user.getId()} ==  ${diary.user.id}">삭제하기</a>
+					</div>
 					<footer style="height: 400px;">
 					
 					</footer>
