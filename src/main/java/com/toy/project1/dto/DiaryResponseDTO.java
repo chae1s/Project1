@@ -4,7 +4,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import com.toy.project1.domain.Diary;
-import com.toy.project1.domain.DiaryFiles;
 import com.toy.project1.domain.DiaryHashtag;
 import com.toy.project1.domain.User;
 
@@ -19,8 +18,8 @@ public class DiaryResponseDTO {
 	private String contents;
 	private String createdDate;
 	private Integer hits;
-	private List<DiaryFiles> diaryFiles = new ArrayList<>();
 	private List<DiaryHashtag> hashtags = new ArrayList<>();
+	private String imageUrl;
 	
 	
 	public DiaryResponseDTO(Diary diary, List<DiaryHashtag> hashtags) {
@@ -30,11 +29,10 @@ public class DiaryResponseDTO {
 		this.contents = diary.getContents();
 		this.createdDate =	diary.getCreatedDate();
 		this.hits = diary.getHits();
-		this.diaryFiles = diary.getDiaryFiles();
 		this.hashtags = hashtags;
 	}
 	
-	public DiaryResponseDTO(Diary diary, String regTag) {
+	public DiaryResponseDTO(Diary diary, String regTag, String imageUrl) {
 		this.id = diary.getId();
 		this.id = diary.getId();
 		this.title = diary.getTitle();
@@ -42,11 +40,11 @@ public class DiaryResponseDTO {
 		this.contents = diary.getContents().replaceAll(regTag, " ");
 		this.hits = diary.getHits();
 		this.createdDate =	diary.getCreatedDate();
-		this.diaryFiles = diary.getDiaryFiles();
 		this.hashtags = diary.getHashtags();
+		this.imageUrl = imageUrl;
 	}
 	
-	public DiaryResponseDTO(Diary diary, String regTag, List<DiaryHashtag> hashtags) {
+	public DiaryResponseDTO(Diary diary, String regTag, List<DiaryHashtag> hashtags, String imageUrl) {
 		this.id = diary.getId();
 		this.id = diary.getId();
 		this.title = diary.getTitle();
@@ -54,8 +52,8 @@ public class DiaryResponseDTO {
 		this.contents = diary.getContents().replaceAll(regTag, " ");
 		this.hits = diary.getHits();
 		this.createdDate =	diary.getCreatedDate();
-		this.diaryFiles = diary.getDiaryFiles();
 		this.hashtags = hashtags;
+		this.imageUrl = imageUrl;
 	}
 	
 

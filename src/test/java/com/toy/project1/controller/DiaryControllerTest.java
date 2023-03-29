@@ -58,7 +58,7 @@ public class DiaryControllerTest {
 				.build();
 		
 		//when
-		diaryService.save(files, diaryDTO, sessionUser, hashtagDTO);
+		diaryService.saveDiary(files, diaryDTO, sessionUser, hashtagDTO);
 		List<Diary> diaries = diaryRepository.findByUserId(user.getId());
 		for(Diary diary : diaries) {
 			System.out.println(diary.getTitle());

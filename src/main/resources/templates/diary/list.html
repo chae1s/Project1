@@ -19,8 +19,8 @@
 						</div>
 						<div class="pop_diary_list">
 							<div class="pop_diary" th:onclick="'location.href=\''+ @{/diary/{id}(id=${pop.id})} + '\''" th:each="pop : ${popDiaryDTO}">
-								<img class="pop_diary_img" th:src="@{/images/upload/diary/} + ${pop.diaryFiles.get(0).fileName}" th:if="${not #lists.isEmpty(pop.diaryFiles)}"/>
-								<img class="pop_diary_img" th:src="@{/images/no_img.png}" th:if="${#lists.isEmpty(pop.diaryFiles)}"/>
+								<img class="pop_diary_img" th:src="@{/images/upload/diary/trip0.jpg}" th:if="${not #strings.isEmpty(pop.imageUrl)}"/>
+								<img class="pop_diary_img" th:src="@{/images/no_img.png}" th:if="${#strings.isEmpty(pop.imageUrl)}"/>
 								<div class="pop_diary_area">
 									<div class="pop_diary_text">
 										<h3 th:text="${pop.title}"></h3>
@@ -94,7 +94,7 @@
 										<span th:each="hashtags : ${newDiary.hashtags}" th:text="'#' + ${hashtags.hashtag.hashtag}"></span>
 									</div>
 								</div>
-								<img class="diary_img" th:src="@{/images/upload/diary/} + ${newDiary.diaryFiles.get(0).fileName}" th:if="${not #lists.isEmpty(newDiary.diaryFiles)}"/>
+								<img class="diary_img" th:src="@{/images/upload/diary/trip0.jpg}" th:if="${not #strings.isEmpty(newDiary.imageUrl)}"/>
 							</div>
 						</div>
 						<div th:if = "${!newDiaryDTO.isEmpty()}" class="page">

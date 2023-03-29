@@ -331,3 +331,8 @@
 	color: #7286D3;
 	font-weight: 600;
 }
+
+.image img {
+	display: block;
+	margin: auto;
+}

@@ -16,17 +16,14 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.toy.project1.domain.Diary;
-import com.toy.project1.domain.DiaryFiles;
 import com.toy.project1.domain.DiaryHashtag;
 import com.toy.project1.domain.Hashtag;
 import com.toy.project1.domain.SessionUser;
 import com.toy.project1.domain.User;
-import com.toy.project1.dto.DiaryFilesSaveRequestDTO;
 import com.toy.project1.dto.DiaryResponseDTO;
 import com.toy.project1.dto.DiarySaveRequestDTO;
 import com.toy.project1.dto.HashtagSaveRequestDTO;
 import com.toy.project1.handler.FileHandler;
-import com.toy.project1.repository.DiaryFilesRepository;
 import com.toy.project1.repository.DiaryHashtagRepository;
 import com.toy.project1.repository.DiaryRepository;
 import com.toy.project1.repository.HashtagRepository;
@@ -44,13 +41,12 @@ public class DiaryService {
 	private final HashtagRepository hashtagRepository;
 	private final DiaryHashtagRepository diaryHashtagRepository;
 	
-	private final DiaryFilesRepository diaryFilesRepository;
 	private final FileHandler fileHandler; 
 	
 	private final String regTag = "<(/)?([a-zA-Z]*)(\\s[a-zA-Z]*=[^>]*)?(\\s)*(/)?>";
 	
 	@Transactional
-	public Long save(List<MultipartFile> files, DiarySaveRequestDTO diaryDTO, SessionUser sessionUser, HashtagSaveRequestDTO hashtagDTO) throws Exception {
+	public Long saveDiary(List<MultipartFile> files, DiarySaveRequestDTO diaryDTO, SessionUser sessionUser, HashtagSaveRequestDTO hashtagDTO) throws Exception {
 		//로그인되어 있는 사람이 작성된 게시글의 작성자이기 때문에 로그인된 user의 정보를 가져온다.
 		User user = userRepository.findById(sessionUser.getId()).orElseThrow(() -> new IllegalArgumentException("존재하지 않는 계정입니다."));
 		//diaryDTO에 가져온 user의 정보를 넣어준다.
@@ -70,31 +66,13 @@ public class DiaryService {
 												.build());
 		}
 		
-		/* 다중 파일 업로드 */
-		String fileName = "";
-		for(MultipartFile file : files) {
-			if(file.getSize() == 0L) {
-				continue;
-			}
-			fileName = fileHandler.fileUpload("images/upload/diary", file);
-			DiaryFilesSaveRequestDTO diaryFilesDTO = DiaryFilesSaveRequestDTO.builder()
-					.diary(diary)
-					.oriName(file.getOriginalFilename())
-					.fileName(fileName)
-					.build();
-			
-			DiaryFiles diaryFiles = diaryFilesDTO.toEntity();
-			
-			diaryFilesRepository.save(diaryFiles);
-		}
-		
 		return diary.getId();
 		
 	}
 	
 	public List<DiaryResponseDTO> popularDiaryList() {
 		List<DiaryResponseDTO> diaryDTOs = diaryRepository.findAll(Sort.by(Sort.Direction.DESC, "hits")).stream()
-											.map(diary -> new DiaryResponseDTO(diary, regTag))
+											.map(diary -> new DiaryResponseDTO(diary, regTag, ""))
 											.limit(4)
 											.collect(Collectors.toList());
 		
@@ -107,7 +85,7 @@ public class DiaryService {
 		List<DiaryHashtag> diaryHashtags = new ArrayList<>();
 		for(Diary diary : diaries) {
 			diaryHashtags = diaryHashtagRepository.findByDiaryId(diary.getId());
-			diaryDTOs.add(new DiaryResponseDTO(diary, regTag, diaryHashtags));
+			diaryDTOs.add(new DiaryResponseDTO(diary, regTag, diaryHashtags, ""));
 		}
 		
 		Pageable pageable = PageRequest.of(page, 5);
@@ -130,16 +108,17 @@ public class DiaryService {
 	public void deleteDiary(Long id) throws Exception {
 		Diary diary = diaryRepository.findById(id).orElseThrow(() -> new IllegalArgumentException("존재하지 않는 게시글입니다."));
 		List<DiaryHashtag> diaryHashtags = diaryHashtagRepository.findByDiaryId(id);
-		List<DiaryFiles> diaryFiles = diaryFilesRepository.findByDiaryId(id);
+		
 		for(DiaryHashtag diaryHashtag : diaryHashtags) {
 			diaryHashtagRepository.delete(diaryHashtag);
 		}
-		for(DiaryFiles file : diaryFiles) {
-			fileHandler.fileDelete("images/upload/diary", file.getFileName());
-			diaryFilesRepository.delete(file);
-		}
-		
 		diaryRepository.delete(diary);
 	}
+	
+	public String uploadImage(MultipartFile uploadFile) throws Exception {
+		String fileName = fileHandler.fileUpload("images/upload/diary", uploadFile);
 
+		return fileName;
+	}
+	
 }

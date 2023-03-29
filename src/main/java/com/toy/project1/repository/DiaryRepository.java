@@ -15,12 +15,12 @@ public interface DiaryRepository extends JpaRepository<Diary, Long>{
 
 	List <Diary> findByUserId(Long user_id);
 	
-	@EntityGraph(attributePaths = {"user", "diaryFiles"})
+	@EntityGraph(attributePaths = {"user"})
 	List<Diary> findAll();
 	
-	@EntityGraph(attributePaths = {"user", "diaryFiles"})
+	@EntityGraph(attributePaths = {"user"})
 	List<Diary> findAll(Sort sort);
 	
-	@EntityGraph(attributePaths = {"user", "diaryFiles"})
+	@EntityGraph(attributePaths = {"user"})
 	Optional<Diary> findById(Long id);
 }

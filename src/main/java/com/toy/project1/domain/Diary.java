@@ -36,9 +36,6 @@ public class Diary extends BaseTimeEntity {
 	private Integer hits;
 	@ToString.Exclude
 	@OneToMany(mappedBy = "diary")
-	private List<DiaryFiles> diaryFiles = new ArrayList<>();
-	@ToString.Exclude
-	@OneToMany(mappedBy = "diary")
 	private List<DiaryHashtag> hashtags = new ArrayList<>();
 	
 	
@@ -50,10 +47,6 @@ public class Diary extends BaseTimeEntity {
 		this.contents = contents;
 		this.user = user;
 		this.hits = hits;
-	}
-	
-	public void addFiles(DiaryFiles file) {
-		this.diaryFiles.add(file);
 	}
 	
 }

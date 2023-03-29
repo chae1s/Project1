@@ -27,12 +27,8 @@ ClassicEditor
 			supportAllValues: true
 		},
 		simpleUpload: {
-			uploadUrl: 'http://localhost/diary/save',
+			uploadUrl: 'http://localhost/diary/upload/image',
 			withCredentials: true,
-			headers: {
-				'X-CSRF-TOKEN': 'CSRF-Token',
-                Authorization: 'Bearer <JSON Web Token>'
-			}
 		}
         
 	})
