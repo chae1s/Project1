@@ -3,6 +3,7 @@ package com.toy.project1.dto;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.toy.project1.domain.Comment;
 import com.toy.project1.domain.Diary;
 import com.toy.project1.domain.DiaryHashtag;
 import com.toy.project1.domain.User;
@@ -19,7 +20,9 @@ public class DiaryResponseDTO {
 	private String createdDate;
 	private Integer hits;
 	private List<DiaryHashtag> hashtags = new ArrayList<>();
+	private List<Comment> comments = new ArrayList<>();
 	private String imageUrl;
+	private Long commentCount;
 	
 	
 	public DiaryResponseDTO(Diary diary, List<DiaryHashtag> hashtags) {
@@ -32,7 +35,7 @@ public class DiaryResponseDTO {
 		this.hashtags = hashtags;
 	}
 	
-	public DiaryResponseDTO(Diary diary, String regTag, String imageUrl) {
+	public DiaryResponseDTO(Diary diary, String regTag, String imageUrl, Long commentCount) {
 		this.id = diary.getId();
 		this.id = diary.getId();
 		this.title = diary.getTitle();
@@ -42,9 +45,10 @@ public class DiaryResponseDTO {
 		this.createdDate =	diary.getCreatedDate();
 		this.hashtags = diary.getHashtags();
 		this.imageUrl = imageUrl;
+		this.commentCount = commentCount;
 	}
 	
-	public DiaryResponseDTO(Diary diary, String regTag, List<DiaryHashtag> hashtags, String imageUrl) {
+	public DiaryResponseDTO(Diary diary, String regTag, List<DiaryHashtag> hashtags, String imageUrl, Long commentCount) {
 		this.id = diary.getId();
 		this.id = diary.getId();
 		this.title = diary.getTitle();
@@ -54,6 +58,7 @@ public class DiaryResponseDTO {
 		this.createdDate =	diary.getCreatedDate();
 		this.hashtags = hashtags;
 		this.imageUrl = imageUrl;
+		this.commentCount = commentCount;
 	}
 	
 

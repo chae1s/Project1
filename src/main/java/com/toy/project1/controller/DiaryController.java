@@ -19,20 +19,23 @@ import org.springframework.web.servlet.ModelAndView;
 
 import com.toy.project1.auth.LoginUser;
 import com.toy.project1.domain.SessionUser;
+import com.toy.project1.dto.CommentResponseDTO;
 import com.toy.project1.dto.DiaryResponseDTO;
 import com.toy.project1.dto.DiarySaveRequestDTO;
 import com.toy.project1.dto.DiaryUpdateRequestDTO;
 import com.toy.project1.dto.HashtagSaveRequestDTO;
+import com.toy.project1.service.CommentService;
 import com.toy.project1.service.DiaryService;
 
 import lombok.RequiredArgsConstructor;
 
 @Controller
-@RequestMapping("/diary")
+@RequestMapping("/diaries")
 @RequiredArgsConstructor
 public class DiaryController {
 	
 	private final DiaryService diaryService;
+	private final CommentService commentService;
 	
 	@GetMapping("")
 	public ModelAndView DiaryList(@RequestParam(value = "page", defaultValue = "1") int page) throws Exception {
@@ -57,7 +60,7 @@ public class DiaryController {
 		
 		Long getId = diaryService.saveDiary(diaryDTO, user, hashtagDTO);
 		
-		return "redirect:/diary/"+getId;
+		return "redirect:/diaries/"+getId;
 	}
 	
 	@ResponseBody
@@ -73,7 +76,9 @@ public class DiaryController {
 	@GetMapping("/{id}")
 	public String openDiary(@PathVariable Long id, Model model) {
 		DiaryResponseDTO diaryDTO = diaryService.openDiary(id);
+		List<CommentResponseDTO> commentDTO = commentService.commentList(id);
 		model.addAttribute("diary", diaryDTO);
+		model.addAttribute("comments", commentDTO);
 		
 		return "diary/open";
 	}
@@ -100,14 +105,14 @@ public class DiaryController {
 		System.out.println("update");
 		diaryService.updateDiary(id, diaryDTO, hashtagDTO);
 		
-		return "redirect:/diary/"+id;
+		return "redirect:/diaries/"+id;
 	}
 	
 	@GetMapping("/delete/{id}")
 	public String deleteDiary(@PathVariable Long id) throws Exception {
 		diaryService.deleteDiary(id);
 		
-		return "redirect:/diary";
+		return "redirect:/diaries";
 	}
 
 }

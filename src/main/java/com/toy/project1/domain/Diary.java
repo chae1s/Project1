@@ -3,7 +3,7 @@ package com.toy.project1.domain;
 import java.util.ArrayList;
 import java.util.List;
 
-
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
@@ -37,6 +37,9 @@ public class Diary extends BaseTimeEntity {
 	@ToString.Exclude
 	@OneToMany(mappedBy = "diary")
 	private List<DiaryHashtag> hashtags = new ArrayList<>();
+	@ToString.Exclude
+	@OneToMany(mappedBy = "diary", cascade = CascadeType.REMOVE, fetch = FetchType.EAGER)
+	private List<Comment> comments = new ArrayList<Comment>();
 	
 	
 	

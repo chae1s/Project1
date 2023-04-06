@@ -16,7 +16,7 @@
 						<h2>일기 글쓰기</h2>
 					</div>
 					<!-- Create the editor container -->
-					<form th:action="@{/diary/update/{id}(id=${diary.id})}" th:object="${diaryDTO}"  th:method="put" id="diary_form">
+					<form th:action="@{/diaries/update/{id}(id=${diary.id})}" th:object="${diaryDTO}"  th:method="put" id="diary_form">
 						<input type="text" name="title" class="editor_title" th:value="${diary.title}">
 						<input type="text" name="hashtag" class="editor_hashtag" th:value="${hashtag}">
 						<textarea name="contents" id="editor_area" style="display: none;"></textarea>

@@ -18,6 +18,7 @@ import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
+import com.toy.project1.domain.Comment;
 import com.toy.project1.domain.Diary;
 import com.toy.project1.domain.DiaryHashtag;
 import com.toy.project1.domain.Hashtag;
@@ -28,6 +29,7 @@ import com.toy.project1.dto.DiarySaveRequestDTO;
 import com.toy.project1.dto.DiaryUpdateRequestDTO;
 import com.toy.project1.dto.HashtagSaveRequestDTO;
 import com.toy.project1.handler.FileHandler;
+import com.toy.project1.repository.CommentRepository;
 import com.toy.project1.repository.DiaryHashtagRepository;
 import com.toy.project1.repository.DiaryRepository;
 import com.toy.project1.repository.HashtagRepository;
@@ -44,6 +46,8 @@ public class DiaryService {
 	
 	private final HashtagRepository hashtagRepository;
 	private final DiaryHashtagRepository diaryHashtagRepository;
+	
+	private final CommentRepository commentRepository;
 	
 	private final FileHandler fileHandler; 
 	
@@ -66,7 +70,7 @@ public class DiaryService {
 	
 	public List<DiaryResponseDTO> popularDiaryList() {
 		List<DiaryResponseDTO> diaryDTOs = diaryRepository.findAll(Sort.by(Sort.Direction.DESC, "hits")).stream()
-											.map(diary -> new DiaryResponseDTO(diary, regTag, getImgSrc(diary.getContents())))
+											.map(diary -> new DiaryResponseDTO(diary, regTag, getImgSrc(diary.getContents()), commentRepository.countByDiaryId(diary.getId())))
 											.limit(4)
 											.collect(Collectors.toList());
 		
@@ -79,7 +83,7 @@ public class DiaryService {
 		List<DiaryHashtag> diaryHashtags = new ArrayList<>();
 		for(Diary diary : diaries) {
 			diaryHashtags = diaryHashtagRepository.findByDiaryId(diary.getId());
-			diaryDTOs.add(new DiaryResponseDTO(diary, regTag, diaryHashtags, getImgSrc(diary.getContents())));
+			diaryDTOs.add(new DiaryResponseDTO(diary, regTag, diaryHashtags, getImgSrc(diary.getContents()), commentRepository.countByDiaryId(diary.getId())));
 		}
 		
 		Pageable pageable = PageRequest.of(page, 5);
@@ -95,7 +99,6 @@ public class DiaryService {
 	public DiaryResponseDTO openDiary(Long id) {
 		Diary diary = diaryRepository.findById(id).orElseThrow(() -> new IllegalArgumentException("존재하지 않는 게시글입니다."));
 		diary.updateHits();
-		
 		List<DiaryHashtag> diaryHashtags = diaryHashtagRepository.findByDiaryId(id);
 		DiaryResponseDTO diaryResponseDTO = new DiaryResponseDTO(diary, diaryHashtags);
 		

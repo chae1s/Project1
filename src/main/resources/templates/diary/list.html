@@ -18,7 +18,7 @@
 						 	<a href="#">더보기</a>
 						</div>
 						<div class="pop_diary_list">
-							<div class="pop_diary" th:onclick="'location.href=\''+ @{/diary/{id}(id=${pop.id})} + '\''" th:each="pop : ${popDiaryDTO}">
+							<div class="pop_diary" th:onclick="'location.href=\''+ @{/diaries/{id}(id=${pop.id})} + '\''" th:each="pop : ${popDiaryDTO}">
 								<img class="pop_diary_img" th:src="${pop.imageUrl}" th:if="${not #strings.isEmpty(pop.imageUrl)}"/>
 								<img class="pop_diary_img" th:src="@{/images/no_img.png}" th:if="${#strings.isEmpty(pop.imageUrl)}"/>
 								<div class="pop_diary_area">
@@ -28,7 +28,7 @@
 											<span class="info_date" th:text="${pop.createdDate}"></span>
 											<span class="diary_c">
 												<span class="info_comment">댓글 </span>
-												<span class="comment_num">200</span>
+												<span class="comment_num" th:text="${pop.commentCount}">200</span>
 											</span>
 											<span class="diary_h">
 												<span class="info_hits">조회수 </span>
@@ -59,7 +59,7 @@
 						 	<a href="#">더보기</a>
 						</div>
 						<div class="diary_list">
-							<div class="diary" th:onclick="'location.href=\''+ @{/diary/{id}(id=${newDiary.id})} + '\''" th:each="newDiary : ${newDiaryDTO}">
+							<div class="diary" th:onclick="'location.href=\''+ @{/diaries/{id}(id=${newDiary.id})} + '\''" th:each="newDiary : ${newDiaryDTO}">
 								<div class="diary_area">
 									<div class="diary_text">
 										<div class="diary_tdch">
@@ -68,7 +68,7 @@
 												<span class="info_date" th:text="${newDiary.createdDate}"></span>
 												<span class="diary_c">
 													<span class="info_comment">댓글 </span>
-													<span class="comment_num">200</span>
+													<span class="comment_num" th:text="${newDiary.commentCount}"></span>
 												</span>
 												<span class="diary_h">
 													<span class="info_hits">조회수 </span>

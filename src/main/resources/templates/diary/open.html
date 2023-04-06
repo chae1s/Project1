@@ -45,28 +45,43 @@
 						<div class="diary_comment">
 							<div class="comment_count">
 								<span>댓글</span>
-								<span>200</span>
+								<span th:text="${#lists.size(comments)}">200</span>
 							</div>
 							<div class="comment_view">
-								<ul class="list_comment">
-									<li>
+								<ul class="list_comment" th:if="${not #lists.isEmpty(comments)}">
+									<li th:each="comment : ${comments}">
 										<div class="comment">
 											<div class="img_area">
-												<img alt="" th:src="@{/images/upload/user/} + ${diary.user.profile_image}">
+												<img alt="" th:src="@{/images/upload/user/} + ${comment.user.profile_image}">
 											</div>
 											<div class="comment_info">
 												<div class="profile_info">
-													<span>닉네임쓸꺼야</span>
-													<span class="txt_date">2023.04.04</span>
+													<span th:text="${comment.user.nickname}"></span>
+													<span class="txt_date" th:text="${comment.createdDate}"></span>
 												</div>
-												<div class="post">
-													I fly away-Take me to London Paris New York city들
-													아름다운 이 도시에 빠져서 나
-													Like I'm a bird bird 날아 다니는 새처럼
-													난 자유롭게 fly fly 나 숨을 셔
-													Take me to new world anywhere 어디든
+												<div class="post" th:text="${comment.content}"></div>
+												<div class="comment_more">
+													<div class="comment_reply">답글</div>
+													<div class="comment_icon">
+														<img alt="" th:src="@{/icons/menu.png}" class="menu_icon">
+													</div>
+													<div id="more-menu-container" class="more_menu_container" style="display: none;">
+														<div class="open_layer">
+															<div class="box_opt_menu">
+																<span th:text="${comment.id}" style="display: none;" id="comment_id"></span>
+																<div class="menu_item" sec:authorize="isAuthenticated()" th:if="${session.user.getId()} == ${comment.user.id}">
+																	<span class="link_menu update_comment">수정</span>
+																</div>
+																<div class="menu_item" sec:authorize="isAuthenticated()" th:if="${session.user.getId()} == ${comment.user.id}">
+																	<span class="link_menu delete_comment">삭제</span>
+																</div>
+																<div class="menu_item" sec:authorize="isAuthenticated()" th:if="${session.user.getId()} != ${comment.user.id}">
+																	<a class="link_menu alert_comment" th:href="@{/}">신고</a>
+																</div>
+															</div>
+														</div>
+													</div>
 												</div>
-												<div class="comment_more">답글</div>
 											</div>
 										</div>
 									</li>
@@ -92,43 +107,25 @@
 											</div>
 										</div>
 									</li>
-									<li>
-									<div class="comment">
-											<div class="img_area">
-												<img alt="" th:src="@{/images/upload/user/} + ${diary.user.profile_image}">
-											</div>
-											<div class="comment_info">
-												<div class="profile_info">
-													<span>닉네임쓸꺼야</span>
-													<span class="txt_date">2023.04.04</span>
-												</div>
-												<div class="post">
-													I fly away-Take me to London Paris New York city들
-													아름다운 이 도시에 빠져서 나
-													Like I'm a bird bird 날아 다니는 새처럼
-													난 자유롭게 fly fly 나 숨을 셔
-													Take me to new world anywhere 어디든
-												</div>
-												<div class="comment_more">답글</div>
-											</div>
-										</div>
-									</li>
 								</ul>
 							</div>
 							<div class="comment_write">
 								<div class="text_write">
 									<div class="box_textarea">
-										<textarea maxlength="600" placeholder="댓글을 작성하세요"></textarea>
+										<input type="hidden" id="update_comment_id">
+										<textarea maxlength="600" placeholder="댓글을 작성하세요" id="content" class="input_area" sec:authorize="isAuthenticated()"></textarea>
+										<textarea maxlength="600" placeholder="로그인을 해야 작성 가능합니다." id="content" sec:authorize="isAnonymous()"></textarea>
 									</div>
 									<div class="btn_group">
-										<button class="comfirm_button">등록</button>
+										<button class="comfirm_button comment_button" type="button" sec:authorize="isAuthenticated()">등록</button>
+										<button class="update_button comment_button" type="button" sec:authorize="isAuthenticated()" style="display: none;">수정</button>
 									</div>
 								</div>
 							</div>
 						</div>
 						<div class="writer_btn">
-							<a th:href="@{/diary/update/}+${diary.id}" sec:authorize="isAuthenticated()" th:if="${session.user.getId()} == ${diary.user.id}" class="update">수정</a>					
-							<a th:href="@{/diary/delete/}+${diary.id}" sec:authorize="isAuthenticated()" th:if="${session.user.getId()} == ${diary.user.id}" class="delete">삭제</a>
+							<a th:href="@{/diaries/update/}+${diary.id}" sec:authorize="isAuthenticated()" th:if="${session.user.getId()} == ${diary.user.id}" class="update">수정</a>					
+							<a th:href="@{/diaries/delete/}+${diary.id}" sec:authorize="isAuthenticated()" th:if="${session.user.getId()} == ${diary.user.id}" class="delete">삭제</a>
 						</div>
 					</section>
 					<footer style="height: 400px;">
@@ -137,5 +134,104 @@
 				</div>
 			</div>
 		</div>
+		<script th:inline="javascript">
+			var diaryId = /*[[${diary.id}]]*/
+			
+			$(".menu_icon").on("click", function() {
+				$(this).parent().siblings(".more_menu_container").show();
+			})
+			
+			$(document).mouseup(function(e) {
+				if($(".more_menu_container").has(e.target).length==0) {
+					$(".more_menu_container").hide();
+	            } 
+				
+			})
+			
+			$(".delete_comment").on("click", function() {
+				var id = $(this).parent().siblings("#comment_id").text();
+				$.ajax({
+					type : "GET",
+					url : "/diaries/" + diaryId + "/comments/delete/" + id,
+					success: function() {
+						window.location.reload();
+					},
+					error : function(jqXHR, textStatus, errorThrown) {
+						console.log("ERROR : " + textStatus + " : " + errorThrown);
+					}
+				})
+			})
+			
+			$(".update_comment").on("click", function() {
+				var id = $(this).parent().siblings("#comment_id").text();
+				$.ajax({
+					type : "GET",
+					url : "/diaries/" + diaryId + "/comments/update/" + id,
+					success: function(map) {
+						$(".input_area").val(map.content);
+						$("#update_comment_id").val(map.id);
+						$(".comfirm_button").hide();
+						$(".update_button").show();
+					},
+					error : function(jqXHR, textStatus, errorThrown) {
+						console.log("ERROR : " + textStatus + " : " + errorThrown);
+					}
+				})
+			})
+			
+			
+			$(".comfirm_button").on("click", function() {
+				commentSave();
+			})
+			
+			$(".update_button").on("click", function() {
+				commentUpdate();
+			})
+			
+			function commentSave() {
+				var content = $("#content").val();
+				if(!content || content.trim() === "") {
+					alert("입력한 내용이 없습니다.");
+					return false;
+				} else {
+					$.ajax({
+						type : "POST",
+						url : "/diaries/" + diaryId + "/comments",
+						data: {content : content},
+						success: function() {
+							window.location.reload();
+						},
+						error : function(jqXHR, textStatus, errorThrown) {
+							console.log("ERROR : " + textStatus + " : " + errorThrown);
+						}
+						
+					})
+				}
+			}
+			
+			function commentUpdate() {
+				var content = $("#content").val();
+				var updateId = $("#update_comment_id").val();
+				
+				if(!content || content.trim() === "") {
+					alert("입력한 내용이 없습니다.");
+					return false;
+				} else {
+					$.ajax({
+						type : "POST",
+						url : "/diaries/" + diaryId + "/comments/update/" + updateId,
+						data: {content : content},
+						success: function() {
+							window.location.reload();
+						},
+						error : function(jqXHR, textStatus, errorThrown) {
+							console.log("ERROR : " + textStatus + " : " + errorThrown);
+						}
+						
+					})
+				}
+			}
+			
+		</script>
 	</body>
 </html>
