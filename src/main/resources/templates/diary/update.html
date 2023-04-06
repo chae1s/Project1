@@ -16,11 +16,11 @@
 						<h2>일기 글쓰기</h2>
 					</div>
 					<!-- Create the editor container -->
-					<form th:action="@{/diary/save}" th:object="${diaryDTO}" method="post" id="diary_form">
-						<input type="text" name="title" class="editor_title" placeholder="제목을 입력해 주세요.">
-						<input type="text" name="hashtag" class="editor_hashtag" placeholder="태그를 입력하세요. ex)#여행일기">
+					<form th:action="@{/diary/update/{id}(id=${diary.id})}" th:object="${diaryDTO}"  th:method="put" id="diary_form">
+						<input type="text" name="title" class="editor_title" th:value="${diary.title}">
+						<input type="text" name="hashtag" class="editor_hashtag" th:value="${hashtag}">
 						<textarea name="contents" id="editor_area" style="display: none;"></textarea>
-						<div id="editor"></div>
+						<div id="editor" th:utext="${diary.contents}"></div>
 						<button class="edit_button" type="button" id="edit_button">등록</button>
 					</form>
 				</div>

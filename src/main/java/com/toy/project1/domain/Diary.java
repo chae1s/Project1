@@ -49,4 +49,13 @@ public class Diary extends BaseTimeEntity {
 		this.hits = hits;
 	}
 	
+	public void updateHits() {
+		this.hits += 1;
+	}
+	
+	public void update(String title, String contents) {
+		this.title = title;
+		this.contents = contents;
+	}
+	
 }

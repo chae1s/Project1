@@ -1,9 +1,7 @@
 package com.toy.project1.controller;
 
 
-import java.util.ArrayList;
 import java.util.List;
-import java.util.Random;
 
 import javax.servlet.http.HttpSession;
 
@@ -13,7 +11,6 @@ import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
-import org.springframework.web.multipart.MultipartFile;
 
 import com.toy.project1.domain.Diary;
 import com.toy.project1.domain.SessionUser;
@@ -47,7 +44,6 @@ public class DiaryControllerTest {
 		
 		SessionUser sessionUser = new SessionUser(user);
 		
-		List<MultipartFile> files = new ArrayList<MultipartFile>();
 		DiarySaveRequestDTO diaryDTO = DiarySaveRequestDTO.builder()
 				.user(user)
 				.title("테스트여행일기 입니다.")
@@ -58,7 +54,7 @@ public class DiaryControllerTest {
 				.build();
 		
 		//when
-		diaryService.saveDiary(files, diaryDTO, sessionUser, hashtagDTO);
+		diaryService.saveDiary( diaryDTO, sessionUser, hashtagDTO);
 		List<Diary> diaries = diaryRepository.findByUserId(user.getId());
 		for(Diary diary : diaries) {
 			System.out.println(diary.getTitle());

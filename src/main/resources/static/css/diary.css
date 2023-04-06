@@ -129,6 +129,10 @@
 	padding: 7px 6px 11px;
 }
 
+.pop_diary_text {
+	height: 99px;
+}
+
 .pop_diary .pop_diary_area .pop_diary_text h3 {
 	font-size: 16px;
 	font-weight: 500;
@@ -336,3 +340,226 @@
 	display: block;
 	margin: auto;
 }
+
+.contents_section {
+	margin: 25px auto;
+	width: 868px;
+}
+
+.contents_section div h3 {
+	font-size: 22px;
+	font-weight: 500;
+}
+
+.contents_section .diary_info {
+	margin-top: 8px;
+	display: flex;
+	gap: 0 18px;
+}
+
+.contents_section .diary_info .diary_user{
+	display: flex;
+}
+
+.contents_section .diary_info .img_area {
+	width: 36px;
+	height: 36px;
+	border-radius: 50%;
+	display: inline-block;
+	margin-right: 8px;
+	box-sizing: border-box;
+	position: relative;
+	overflow: hidden;
+}
+
+.contents_section .diary_info .img_area img {
+	position: absolute;
+	height: 100%;
+	width: auto;
+	left: 50%;
+	top: 50%;
+	transform: translate(-50%, -50%);
+}
+
+.contents_section .diary_info .nickname {
+	font-size: 15px;
+	color: #2F3438;
+	line-height: 36px;
+}
+
+.contents_section .diary_info .dch {
+	align-items: center;
+	font-size: 15px;
+	color: #80898F;
+	display: flex;
+	gap: 0 6px;
+}
+
+.contents_section .diary_info span {
+	line-height: 36px;
+}
+
+.contents_section .diary_contents {
+	margin: 19px 0 24px;
+}
+
+.contents_section #diary_hashtag {
+	display: flex;
+	gap: 0 15px;
+	padding-bottom: 25px;
+	border-bottom: 1px solid #D9D9D9;
+}
+
+.contents_section #diary_hashtag span {
+	font-size: 14px;
+	color: #80898F;
+}
+
+.contents_section .diary_comment {
+	margin-top: 25px;
+}
+
+.contents_section .diary_comment .comment_count{
+	font-size: 15px;
+}
+
+.contents_section .diary_comment .comment_count span{
+	margin-right: 6px;
+}
+
+.contents_section .diary_comment .comment_view {
+	padding-top: 10px;
+}
+
+.contents_section .diary_comment .comment_view .list_comment>li {
+	position: relative;
+}
+
+.contents_section .diary_comment .comment_view .comment{
+	display: flex;
+	box-sizing: border-box;
+	width: 100%;
+	padding: 19px 0 16px;
+	position: relative;
+}
+
+.contents_section .diary_comment .comment_view .list_comment li .img_area {
+	width: 30px;
+	height: 30px;
+	border-radius: 50%;
+	margin-right: 8px;
+	box-sizing: border-box;
+	position: relative;
+	overflow: hidden;
+}
+
+.contents_section .diary_comment .comment_view .list_comment li .img_area img {
+	position: absolute;
+	height: 100%;
+	width: auto;
+	left: 50%;
+	top: 50%;
+	transform: translate(-50%, -50%);
+}
+
+.contents_section .comment_view .list_comment li .comment_info {
+	margin-top: -2px;
+	vertical-align: top;
+	max-width: 760px;
+	font-size: 13px;
+	word-break: break-all;
+	line-height: 1.6;
+}
+
+.contents_section .comment_view .list_comment li .comment_info .profile_info {
+	margin-top: -4px;
+	margin-bottom: 2px;
+}
+
+.contents_section .comment_view .list_comment li .comment_info .txt_date {
+	color: #80898F;
+	font-size: 11px;
+	vertical-align: middle;
+	margin-left: 3px;
+	outline: 0;
+}
+
+.contents_section .comment_view .list_comment li .comment_info .post {
+	padding-top: 3px;
+}
+
+.contents_section .comment_view .list_comment li .comment_info .comment_more {
+	position: absolute;
+	top: 18px;
+	right: 0;
+}
+
+.contents_section .comment_view .list_comment .reply_comment  {
+	margin-top: -1px;
+}
+
+.reply_comment .comment {
+	padding: 10px 0 14px 39px !important;
+}
+
+.reply_comment .comment_info {
+	width: 729px;
+}
+
+.contents_section .diary_comment .comment_write {
+	margin-top: 30px;
+}
+
+.contents_section .diary_comment .text_write {
+	border: 1px solid #D9D9D9;
+	background-color: #fff;
+	padding: 12px 10px 10px 20px;
+	border-radius: 2px;
+}
+
+.contents_section .diary_comment .box_textarea textarea {
+	width: 100%;
+	height: 86px;
+	margin: -5px -5px 0;
+	padding: 5px 5px 0;
+	font-size: 13px;
+	line-height: 1.6;
+	resize: none;
+	vertical-align: top;
+	outline: none;
+}
+
+.contents_section .diary_comment .btn_group {
+	display: flex;
+	justify-content: flex-end;
+}
+
+.contents_section .diary_comment .btn_group .comfirm_button {
+	background-color: #7286D3;
+	color: #fff;
+	border: 0 none;
+	font-size: 13px;
+	width: 54px;
+	height: 34px;
+	border-radius: 2px;
+}
+
+.contents_section .writer_btn {
+	display: flex;
+	justify-content: flex-end;
+	padding-top: 20px;
+	gap: 0 6px;
+}
+
+.contents_section .writer_btn a {
+	font-size: 13px;
+	border: 1px solid #D9D9D9;
+	padding: 8px 14px;
+}
+
+.contents_section .writer_btn .delete {
+	color: #D3728E;
+}
+
+
+

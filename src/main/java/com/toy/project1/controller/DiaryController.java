@@ -1,9 +1,7 @@
 package com.toy.project1.controller;
 
-import java.io.FilenameFilter;
 import java.util.List;
 import java.util.Map;
-import java.util.UUID;
 
 import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Controller;
@@ -11,9 +9,9 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RequestPart;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.multipart.MultipartRequest;
@@ -23,6 +21,7 @@ import com.toy.project1.auth.LoginUser;
 import com.toy.project1.domain.SessionUser;
 import com.toy.project1.dto.DiaryResponseDTO;
 import com.toy.project1.dto.DiarySaveRequestDTO;
+import com.toy.project1.dto.DiaryUpdateRequestDTO;
 import com.toy.project1.dto.HashtagSaveRequestDTO;
 import com.toy.project1.service.DiaryService;
 
@@ -54,10 +53,9 @@ public class DiaryController {
 	}
 	
 	@PostMapping("/save")
-	public String saveDiary(@RequestPart(value = "files", required = false) List<MultipartFile> files,
-			DiarySaveRequestDTO diaryDTO, @LoginUser SessionUser user, HashtagSaveRequestDTO hashtagDTO) throws Exception {
+	public String saveDiary(DiarySaveRequestDTO diaryDTO, @LoginUser SessionUser user, HashtagSaveRequestDTO hashtagDTO) throws Exception {
 		
-		Long getId = diaryService.saveDiary(files, diaryDTO, user, hashtagDTO);
+		Long getId = diaryService.saveDiary(diaryDTO, user, hashtagDTO);
 		
 		return "redirect:/diary/"+getId;
 	}
@@ -68,7 +66,7 @@ public class DiaryController {
 		MultipartFile uploadFile = request.getFile("upload");
 		String fileName = diaryService.uploadImage(uploadFile);
 		System.out.println(fileName);
-		paramMap.put("url", "../images/upload/diary/" + fileName);
+		paramMap.put("url", "/images/upload/diary/" + fileName);
 		return paramMap;
 	}
 	
@@ -78,6 +76,31 @@ public class DiaryController {
 		model.addAttribute("diary", diaryDTO);
 		
 		return "diary/open";
+	}
+	
+	@GetMapping("/update/{id}")
+	public String updateDiary(@PathVariable Long id, @LoginUser SessionUser user, Model model) throws Exception {
+		DiaryResponseDTO diaryDTO = diaryService.openDiary(id);
+		if(user.getId() != diaryDTO.getUser().getId()) {
+			throw new IllegalArgumentException("이 페이지 이용 불가");
+		}
+		StringBuilder sb = new StringBuilder();
+		for(int i=0;i<diaryDTO.getHashtags().size();i++) {
+			sb.append("#");
+			sb.append(diaryDTO.getHashtags().get(i).getHashtag().getHashtag());
+			sb.append(" ");
+		}
+		model.addAttribute("diary", diaryDTO);
+		model.addAttribute("hashtag", sb.toString());
+		return "diary/update";
+	}
+	
+	@PutMapping("/update/{id}")
+	public String updateDiary(@PathVariable Long id, DiaryUpdateRequestDTO diaryDTO, HashtagSaveRequestDTO hashtagDTO) throws Exception{
+		System.out.println("update");
+		diaryService.updateDiary(id, diaryDTO, hashtagDTO);
+		
+		return "redirect:/diary/"+id;
 	}
 	
 	@GetMapping("/delete/{id}")

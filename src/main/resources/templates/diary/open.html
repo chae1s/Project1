@@ -1,5 +1,6 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
+<html xmlns:th="http://www.thymeleaf.org"
+	xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 	<head>
 		<meta charset="UTF-8">
 		<meta name="viewport" content="width=device-width, initial-scale=1">
@@ -12,20 +13,124 @@
 			<div class="frame">
 				<div th:replace="fragments/header :: menu"></div>
 				<div class="trip-frame">
-					<section>
-						<div th:text="${diary.title}"></div>
-						<div th:text="${diary.user.nickname}"></div>
-						<div class="img_area">
-							<img alt="" th:src="@{/images/upload/user/} + ${diary.user.profile_image}">
+					<section class="contents_section">
+						<div>
+							<h3 th:text="${diary.title}"></h3>
+							<div class="diary_info">
+								<div class="diary_user">
+									<div class="img_area">
+										<img alt="" th:src="@{/images/upload/user/} + ${diary.user.profile_image}">
+									</div>
+									<div class="nickname" th:text="${diary.user.nickname}"></div>
+								</div>
+								<div class="dch">
+									<span class="info_date" th:text="${diary.createdDate}"></span>
+								</div>
+								<div class="dch">
+									<span class="info_comment">댓글 </span>
+									<span class="comment_num">200</span>
+								</div>
+								<div class="dch">
+									<span class="info_hits">조회수 </span>
+									<span class="hits_num" th:text="${diary.hits}"></span>
+								</div>
+							</div>
 						</div>
-						<div th:utext="${diary.contents}"></div>
-						<div class="diary_hashtag" th:if="${not #lists.isEmpty(diary.hashtags)}" >
+						<div class="diary_contents">
+							<div th:utext="${diary.contents}"></div>
+						</div>
+						<div id="diary_hashtag" th:if="${not #lists.isEmpty(diary.hashtags)}" >
 							<span th:each="hashtags : ${diary.hashtags}" th:text="'#' + ${hashtags.hashtag.hashtag}"></span>
 						</div>
+						<div class="diary_comment">
+							<div class="comment_count">
+								<span>댓글</span>
+								<span>200</span>
+							</div>
+							<div class="comment_view">
+								<ul class="list_comment">
+									<li>
+										<div class="comment">
+											<div class="img_area">
+												<img alt="" th:src="@{/images/upload/user/} + ${diary.user.profile_image}">
+											</div>
+											<div class="comment_info">
+												<div class="profile_info">
+													<span>닉네임쓸꺼야</span>
+													<span class="txt_date">2023.04.04</span>
+												</div>
+												<div class="post">
+													I fly away-Take me to London Paris New York city들
+													아름다운 이 도시에 빠져서 나
+													Like I'm a bird bird 날아 다니는 새처럼
+													난 자유롭게 fly fly 나 숨을 셔
+													Take me to new world anywhere 어디든
+												</div>
+												<div class="comment_more">답글</div>
+											</div>
+										</div>
+									</li>
+									<li class="reply_comment">
+										<div class="comment">
+											<div class="img_area">
+												<img alt="" th:src="@{/images/upload/user/} + ${diary.user.profile_image}">
+											</div>
+											<div class="comment_info">
+												<div class="profile_info">
+													<span>닉네임쓸꺼야</span>
+													<span class="txt_date">2023.04.04</span>
+												</div>
+												<div class="post">
+													I fly away-
+													Take me to London Paris New York city들
+													아름다운 이 도시에 빠져서 나
+													Like I'm a bird bird 날아 다니는 새처럼
+													난 자유롭게 fly fly 나 숨을 셔
+													Take me to new world anywhere 어디든
+													답답한 이 곳을 벗어 나기만 하면</div>
+												<div class="comment_more">답글</div>
+											</div>
+										</div>
+									</li>
+									<li>
+									<div class="comment">
+											<div class="img_area">
+												<img alt="" th:src="@{/images/upload/user/} + ${diary.user.profile_image}">
+											</div>
+											<div class="comment_info">
+												<div class="profile_info">
+													<span>닉네임쓸꺼야</span>
+													<span class="txt_date">2023.04.04</span>
+												</div>
+												<div class="post">
+													I fly away-Take me to London Paris New York city들
+													아름다운 이 도시에 빠져서 나
+													Like I'm a bird bird 날아 다니는 새처럼
+													난 자유롭게 fly fly 나 숨을 셔
+													Take me to new world anywhere 어디든
+												</div>
+												<div class="comment_more">답글</div>
+											</div>
+										</div>
+									</li>
+								</ul>
+							</div>
+							<div class="comment_write">
+								<div class="text_write">
+									<div class="box_textarea">
+										<textarea maxlength="600" placeholder="댓글을 작성하세요"></textarea>
+									</div>
+									<div class="btn_group">
+										<button class="comfirm_button">등록</button>
+									</div>
+								</div>
+							</div>
+						</div>
+						<div class="writer_btn">
+							<a th:href="@{/diary/update/}+${diary.id}" sec:authorize="isAuthenticated()" th:if="${session.user.getId()} == ${diary.user.id}" class="update">수정</a>					
+							<a th:href="@{/diary/delete/}+${diary.id}" sec:authorize="isAuthenticated()" th:if="${session.user.getId()} == ${diary.user.id}" class="delete">삭제</a>
+						</div>
 					</section>
-					<div>
-						<a th:href="@{/diary/delete/}+${diary.id}" sec:authorize="isAuthenticated()" th:if="${session.user.getId()} ==  ${diary.user.id}">삭제하기</a>
-					</div>
 					<footer style="height: 400px;">
 					
 					</footer>
